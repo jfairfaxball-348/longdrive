@@ -1,0 +1,26 @@
+# A one-hour journey through minimal deep house at 110 BPM, in nine movements.
+#
+# Each line is: minutes:seconds [optional key] the prompt for that movement.
+# Every line is a whole prompt, not an addition. Rewriting really changes the music,
+# while adding a sentence to a long prompt does almost nothing. Keep the tempo the same
+# throughout, so that movements can be beat-matched, and name the elements you want.
+#
+#   uv run longdrive generate --journey examples/deep-house-journey.txt --duration 1h
+
+0:00 [A minor] Instrumental minimal deep house, 110 BPM. Stripped back to tight rounded kick drums, warm syncopated synth bass and soft shuffling hi-hats. Minimal percussive clicks, lots of space, restrained and hypnotic. Smooth uninterrupted groove, consistent relaxing energy.
+
+7:00 Instrumental micro-funk, 110 BPM. Tight rounded kick, rubbery syncopated bass and intricate percussive clicks. Restrained funk rhythms, elegant rhythmic repetition, tiny evolving details. Clean, understated and hypnotic. Smooth uninterrupted groove.
+
+14:00 Instrumental minimal deep house, 110 BPM. Delicate electronic chord stabs with gentle filter modulation over a warm rolling bassline. Warm analog textures and spacious atmospheric backgrounds. Sophisticated and understated. Smooth uninterrupted groove.
+
+21:00 [C major] Instrumental deep house, 110 BPM. Lush warm chord stabs and soft electric piano over a rolling syncopated bassline. Warm, soulful and gently uplifting, with beautifully balanced low-end warmth. Smooth uninterrupted groove.
+
+28:00 Instrumental melodic minimal house, 110 BPM. Subtle repeating melodic synthesizer fragments and soft plucks over a gentle driving groove. Futuristic, airy and open, like a quiet journey through a beautifully illuminated cyberpunk metropolis.
+
+35:00 [E minor] Instrumental dub techno, 110 BPM. Deep echoing chords, tape delay, a submerged kick and soft hiss. Dark, hazy and hypnotic, with the warm bass taking the lead. Smooth uninterrupted groove.
+
+42:00 Instrumental atmospheric deep house, 110 BPM. Warm sustained pads rise under soft shuffling hi-hats, with the filter slowly opening. Spacious, weightless and cinematic, with a warm rounded kick. Consistent relaxing energy.
+
+49:00 [A minor] Instrumental sophisticated electronic groove music, 110 BPM. Warm syncopated synth bass, delicate chord stabs, melodic synthesizer fragments and soft hi-hats, layered with care. Rich, balanced and elegant. Smooth uninterrupted groove.
+
+55:00 Instrumental minimal deep house, 110 BPM. Elements fall away, leaving tight kick drums, warm bass and soft hi-hats. Sparse, clean and hypnotic, with lots of space. Consistent relaxing energy.

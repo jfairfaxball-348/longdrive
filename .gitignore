@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+*.egg-info/
+
+# The model engine lives in its own pinned checkout and environment.
+engines/
+
+# Generated music and working files.
+runs/
+
+# Finished mixes keep their recipes in git, and their audio out of it.
+mixes/**/*.wav
+mixes/**/*.mp3
+mixes/**/*.flac
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

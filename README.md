@@ -156,6 +156,20 @@ whether a piece is holding its character.
 `runs/` is working space. Anything worth keeping moves to [mixes/](mixes/README.md), numbered in
 order, along with the recipe that made it.
 
+## Measuring a run
+
+[scripts/](scripts/) holds the measurements behind the
+[engineering notes](docs/engineering-notes.md).
+
+| Script | What it shows |
+| --- | --- |
+| `review_run.py` | Each movement's tempo, key, busyness and tone, plus rough joins and stops |
+| `evolution.py` | Tone, harmony, key and busyness, minute by minute |
+| `pattern.py` | How alike passages are, note by note |
+| `blend_check.py` | Whether the kicks line up through each blend |
+| `spectrogram.py` | The whole piece on one page, run with the engine's Python |
+| `phone_mp3.py` | 128 kbps MP3 parts that are small enough to send to a phone |
+
 ## Tests
 
 ```bash

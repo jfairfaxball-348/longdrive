@@ -1,4 +1,4 @@
-# Next session: a groove hour from the keyword lists
+# Next session: mix 3 from the user's own prompts
 
 To pick this up, open a new session in this repo and paste everything below the line, or just say
 "read docs/next-session.md and follow it".
@@ -9,9 +9,8 @@ You're picking up longdrive, which turns prompts into continuous long-form music
 Mix 001, a one-hour piece in nine sections, is finished and the user likes it. The next mixes should
 change more often, with simpler drums that take up less room.
 
-Keyword lists, a new section every 3.5 minutes and a drum swap are committed on the branch
-`keyword-lists`, which hasn't been pushed or merged. Mix 002, a full hour of guitar spa music, was made
-with them, and the user approved it.
+Keyword lists, a new section every 3.5 minutes and a drum swap are merged into `main` and on GitHub.
+Mix 002, a full hour of guitar spa music, was made with them, and the user approved it.
 
 Read these first, and don't repeat the experiments they describe:
 
@@ -40,12 +39,16 @@ Read these first, and don't repeat the experiments they describe:
 
 ## What's left
 
-1. Render a 14-minute draft from `funky` or `ambient`. Neither has been rendered through a whole run
+1. Make mix 3 from the user's own 17 prompts, once they've sent them. Use a journey file that keeps
+   their order and wording, with one tempo and a section about every 3:30. They don't want a preview:
+   render the full hour, save it as `mixes/003-…` following `mixes/README.md`, update the docs, then
+   commit, tag, push and merge. They asked for all of that on 2026-11-01, so don't stop to ask.
+2. Render a 14-minute draft from `funky` or `ambient`. Neither has been rendered through a whole run
    since the frame lost its drum sentence and the lists lost their drums group. `runs/audition-funky`
    is that draft, stopped at window 4 of 17, and `uv run longdrive resume runs/audition-funky` carries
    on from there.
-2. With the user's OK, render an hour of it at `standard`, about 4 hours 15 minutes, and save it as
-   `mixes/003-…`, following `mixes/README.md`.
+3. With the user's OK, render an hour of it at `standard`, about 4 hours 15 minutes, and save it as
+   the next mix, following `mixes/README.md`.
 
 Not requested, but worth offering once that's done: sliding from one list to another across the hour.
 

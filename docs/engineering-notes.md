@@ -344,6 +344,14 @@ interpreter shutdown spent more than 15 seconds freeing a model that the OS recl
 In repaint mode, upstream fills in `duration` from the source audio, which here means the model is
 told a 170 second window is a 30 second song.
 
+A prompt reaches the text encoder inside a template with the instruction, tempo, key and duration, and
+the whole thing is cut at 256 tokens. The template takes 55, and the tempo and key come after the
+prompt, so a long prompt would lose those first. That leaves about 200 tokens for the prompt, so
+`plan.py` refuses anything over 1,000 characters, about 190 tokens or 150 words of short phrases,
+before a render starts. Upstream's docstring asks for under 512 characters, but nothing on this path
+enforces it. With the template, mix 001's prompts come to 102 to 114 tokens and mix 002's to 119 to
+143, and the longest possible draw from any word list is 152, so nothing here is close to the limit.
+
 ## The weights run code
 
 `AutoModel.from_pretrained(..., trust_remote_code=True)` executes Python from the checkpoint folder.

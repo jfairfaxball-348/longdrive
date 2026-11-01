@@ -24,6 +24,7 @@ import json
 import math
 import random
 import re
+from collections.abc import Iterator, Sequence
 from dataclasses import asdict, dataclass, field, replace
 from pathlib import Path
 
@@ -51,6 +52,17 @@ DIRECTIONS = (
     "Sparser and more hypnotic, with elements falling away.",
 )
 
+# What goes around each draw from a word list. It doesn't mention drums, because naming them
+# barely changes their pattern and turns them up against the music.
+DEFAULT_FRAME = "Instrumental {genre}, {bpm} BPM. {entries}. Smooth uninterrupted groove."
+
+# A list with no headings draws this many entries per section.
+FLAT_DRAW = 10
+
+# The first and last sections leave these groups out, so a piece starts and ends stripped back.
+_BOOKEND_SKIPS = ("instruments", "texture")
+_MIN_BOOKENDED_SECTIONS = 3
+
 # The prompt, its template and the tempo and key share a 256 token limit, and anything
 # past it is cut from the end, which would lose the tempo and key first. A prompt this
 # long comes to about 190 tokens, leaving room for the rest.
@@ -70,6 +82,8 @@ _KEY_RE = re.compile(r"\b([A-G](?:#|b)?)[ -](major|minor|maj|min)\b")
 _SECTION_RE = re.compile(r"^(\d+(?::\d+){1,2})\s+(?:\[([^\]]+)\]\s*)?(.*)$")
 _SENTENCE_RE = re.compile(r"(?<=[.!?])\s+")
 _PHRASE_RE = re.compile(r",|\band\b")
+_GROUP_RE = re.compile(r"^##\s*(\S+)(?:\s+\(pick\s+(\d+)\))?$")
+_SETTING_RE = re.compile(r"^(bpm|frame|drums|kick):\s*(.+)$")
 
 
 @dataclass(frozen=True)
@@ -114,6 +128,26 @@ EVOLUTIONS = {
 
 
 @dataclass(frozen=True)
+class WordGroup:
+    """Entries that play the same part in a prompt, and how many to draw from them."""
+
+    name: str
+    count: int
+    entries: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class WordList:
+    """A source of prompts. Its tempo, if it has one, holds for every section."""
+
+    groups: tuple[WordGroup, ...]
+    bpm: int | None = None
+    frame: str = DEFAULT_FRAME
+    drums_db: float | None = None
+    kick_db: float | None = None
+
+
+@dataclass(frozen=True)
 class Segment:
     index: int
     start_s: float
@@ -135,10 +169,16 @@ class Plan:
     seed: int
     timing: Timing
     segments: tuple[Segment, ...] = field(default_factory=tuple)
+    drums_db: float | None = None
+    kick_db: float | None = None
 
     @property
     def bar_s(self) -> float:
         return 60.0 / self.bpm * int(self.time_signature)
+
+    @property
+    def swaps_drums(self) -> bool:
+        return self.drums_db is not None or self.kick_db is not None
 
     @property
     def movements(self) -> int:
@@ -217,6 +257,43 @@ def parse_journey(text: str) -> list[Section]:
     return sorted(sections, key=lambda section: section.start_s)
 
 
+def parse_wordlist(text: str) -> WordList:
+    """Read a list: one entry per line, under ``## group (pick 2)`` headings if it has any."""
+    groups: list[tuple[str, int | None, list[str]]] = []
+    settings: dict[str, str] = {}
+    for number, raw in enumerate(text.splitlines(), start=1):
+        line = raw.strip()
+        setting = _SETTING_RE.match(line)
+        if line.startswith("##"):
+            heading = _GROUP_RE.match(line)
+            if not heading:
+                raise ValueError(f"line {number}: expected '## group (pick 2)', got {raw!r}")
+            groups.append((heading.group(1), int(heading.group(2) or 1), []))
+        elif setting:
+            settings[setting.group(1)] = setting.group(2)
+        elif line and not line.startswith("#"):
+            if not groups:
+                groups.append(("entries", None, []))
+            groups[-1][2].append(line)
+
+    if not groups:
+        raise ValueError("the list has no entries")
+    built = []
+    for name, count, entries in groups:
+        count = min(FLAT_DRAW, len(entries)) if count is None else count
+        if not 1 <= count <= len(entries):
+            raise ValueError(f"group {name}: can't pick {count} from {len(entries)} entries")
+        built.append(WordGroup(name, count, tuple(entries)))
+
+    frame = settings.get("frame", DEFAULT_FRAME)
+    if "{entries}" not in frame:
+        raise ValueError("the frame must say where the entries go, with {entries}")
+    bpm = int(settings["bpm"]) if "bpm" in settings else None
+    drums_db = float(settings["drums"]) if "drums" in settings else None
+    kick_db = float(settings["kick"]) if "kick" in settings else None
+    return WordList(tuple(built), bpm, frame, drums_db, kick_db)
+
+
 def _phrases(prompt: str) -> tuple[str, list[str]]:
     """Split a prompt into its opening sentence and the phrases that follow."""
     sentences = _SENTENCE_RE.split(prompt.strip())
@@ -242,6 +319,16 @@ def vary_prompt(prompt: str, direction: str, rng: random.Random) -> str:
     return f"{opening} {', '.join(phrases[index] for index in chosen)}."
 
 
+def _next_key(
+    key: str, home_key: str, index: int, count: int, evolution: Evolution, rng: random.Random
+) -> str:
+    """Move to a related key every so often, returning home for the end of the piece."""
+    if index % evolution.sections_per_key:
+        return key
+    going_home = index + evolution.sections_per_key >= count
+    return home_key if going_home else rng.choice(related_keys(key))
+
+
 def automatic_journey(
     prompt: str, duration_s: float, home_key: str, evolution: Evolution, rng: random.Random
 ) -> list[Section]:
@@ -256,12 +343,100 @@ def automatic_journey(
     sections = [Section(0.0, prompt, home_key)]
     key = home_key
     for index in range(1, count):
-        if index % evolution.sections_per_key == 0:
-            going_home = index + evolution.sections_per_key >= count
-            key = home_key if going_home else rng.choice(related_keys(key))
+        key = _next_key(key, home_key, index, count, evolution, rng)
         varied = vary_prompt(prompt, directions[index], rng)
         sections.append(Section(index * evolution.section_s, varied, key))
     return sections
+
+
+def _shuffled_batches(entries: Sequence[str], rng: random.Random) -> Iterator[str]:
+    """Deal entries for ever, in shuffled batches, so that all are used before any repeats."""
+    while True:
+        batch = list(entries)
+        rng.shuffle(batch)
+        yield from batch
+
+
+def _deal(deck: Iterator[str], count: int) -> list[str]:
+    dealt: list[str] = []
+    while len(dealt) < count:
+        entry = next(deck)
+        if entry not in dealt:
+            dealt.append(entry)
+    return dealt
+
+
+def word_journey(
+    words: WordList,
+    duration_s: float,
+    bpm: int,
+    home_key: str,
+    evolution: Evolution | None,
+    rng: random.Random,
+) -> list[Section]:
+    """A new draw for every movement, opening and closing on the same stripped-back one."""
+    decks = {group: _shuffled_batches(group.entries, rng) for group in words.groups}
+
+    def draw(groups: Sequence[WordGroup]) -> str:
+        genre, entries = "music", []
+        for group in groups:
+            dealt = _deal(decks[group], group.count)
+            if group.name == "genre":
+                genre = ", ".join(dealt)
+            else:
+                entries.extend(dealt)
+        listed = ", ".join(entries)
+        filled = words.frame.replace("{genre}", genre).replace("{bpm}", str(bpm))
+        return filled.replace("{entries}", listed[:1].upper() + listed[1:])
+
+    count = max(1, round(duration_s / evolution.section_s)) if evolution else 1
+    bookended = count >= _MIN_BOOKENDED_SECTIONS
+    kept = [group for group in words.groups if group.name not in _BOOKEND_SKIPS]
+    opening = draw((kept or words.groups) if bookended else words.groups)
+
+    sections = [Section(0.0, opening, home_key)]
+    key = home_key
+    for index in range(1, count):
+        key = _next_key(key, home_key, index, count, evolution, rng)
+        prompt = opening if bookended and index == count - 1 else draw(words.groups)
+        sections.append(Section(index * evolution.section_s, prompt, key))
+    return sections
+
+
+def journey_text(plan: Plan) -> str:
+    """A plan's sections as a timeline, to read through or edit before rendering."""
+    lines = []
+    for segment in plan.segments:
+        if segment.index == 0 or segment.fresh:
+            minutes, seconds = divmod(round(segment.start_s), 60)
+            lines.append(f"{minutes}:{seconds:02d} [{segment.key}] {segment.prompt}")
+    return "\n\n".join(lines) + "\n"
+
+
+def _shortest_section_s(timing: Timing, bpm: int, time_signature: str) -> float:
+    """The blend into a section, plus a phrase for it to be heard on its own."""
+    return timing.blend_s + PHRASE_BARS * 60.0 / bpm * int(time_signature)
+
+
+def snap_section(section_s: float, timing: Timing, shortest_s: float) -> float:
+    """Fit a section length to the windows, so that every section starts on a boundary."""
+    least = math.ceil(round(shortest_s / timing.hop_s, 6))
+    return max(least, round(section_s / timing.hop_s)) * timing.hop_s
+
+
+def place_sections(
+    sections: list[Section], duration_s: float, timing: Timing, shortest_s: float
+) -> list[tuple[int, Section]]:
+    """Start each section on its nearest window, dropping any too short to play on its own."""
+    least = math.ceil(round(shortest_s / timing.hop_s, 6))
+    placed = [(0, sections[0])]
+    for section in sections[1:]:
+        window = round(section.start_s / timing.hop_s)
+        if window - placed[-1][0] >= least:
+            placed.append((window, section))
+    while len(placed) > 1 and duration_s - placed[-1][0] * timing.hop_s < shortest_s:
+        placed.pop()
+    return placed
 
 
 def make_plan(
@@ -275,9 +450,12 @@ def make_plan(
     timing: Timing | None = None,
     evolution: Evolution | None = None,
     journey: list[Section] | None = None,
+    words: WordList | None = None,
+    drums_db: float | None = None,
+    kick_db: float | None = None,
 ) -> Plan:
     prompt = prompt.strip() or (journey[0].prompt if journey else "")
-    if not prompt:
+    if not prompt and words is None:
         raise ValueError("prompt must not be empty")
     if duration_s < 10:
         raise ValueError("duration must be at least 10 seconds")
@@ -285,12 +463,25 @@ def make_plan(
     seed = random.SystemRandom().randrange(2**31) if seed is None else seed
     rng = random.Random(seed)
 
+    if words is not None:
+        bpm = bpm or words.bpm
+        if bpm is None:
+            raise ValueError("a word list needs a tempo: add a 'bpm:' line, or use --bpm")
+        drums_db = words.drums_db if drums_db is None else drums_db
+        kick_db = words.kick_db if kick_db is None else kick_db
     bpm = bpm or parse_bpm(prompt) or rng.randrange(40, 51, 2)
     opening_key = journey[0].key if journey else None
     key = key or opening_key or parse_key(prompt) or rng.choice(DEFAULT_KEYS)
     timing = snap_to_phrases(timing or Timing(), bpm, time_signature)
+    shortest_s = _shortest_section_s(timing, bpm, time_signature)
 
-    if journey is None and evolution is not None:
+    if evolution is not None:
+        section_s = snap_section(evolution.section_s, timing, shortest_s)
+        evolution = replace(evolution, section_s=section_s)
+    if words is not None:
+        journey = word_journey(words, duration_s, bpm, key, evolution, rng)
+        prompt = journey[0].prompt
+    elif journey is None and evolution is not None:
         journey = automatic_journey(prompt, duration_s, key, evolution, rng)
     sections = journey or [Section(0.0, prompt, key)]
 
@@ -298,16 +489,16 @@ def make_plan(
     if longest > MAX_PROMPT_CHARS:
         raise ValueError(f"prompt is over {MAX_PROMPT_CHARS} characters, and would be cut off")
 
+    placed = place_sections(sections, duration_s, timing, shortest_s)
     count = max(1, math.ceil(duration_s / timing.hop_s))
 
     def section_at(index: int) -> Section:
-        started = [s for s in sections if s.start_s <= index * timing.hop_s]
-        return started[-1] if started else sections[0]
+        return [section for window, section in placed if window <= index][-1]
 
     segments = []
     for index in range(count):
         section = section_at(index)
-        started = [s for s in sections if s.start_s <= index * timing.hop_s]
+        started = [s for window, s in placed if window <= index]
         prompts = [s.prompt for s in started if s.prompt]
         keys = [s.key for s in started if s.key]
         next_is_fresh = index + 1 < count and section_at(index + 1) is not section
@@ -333,4 +524,6 @@ def make_plan(
         seed=seed,
         timing=timing,
         segments=tuple(segments),
+        drums_db=drums_db,
+        kick_db=kick_db,
     )

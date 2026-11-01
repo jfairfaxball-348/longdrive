@@ -1,0 +1,37 @@
+# 17 sections at 72 BPM, drawn from wordlists/guitar-spa.txt with seed 26.
+#
+#   uv run longdrive generate --journey mixes/002-guitar-spa/journey.txt --duration 3600 --seed 26 --drums -60 --kick -13
+
+0:00 [G major] Instrumental new age guitar, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Low baritone guitar notes, warm hollow-body guitar notes, soft twelve-string acoustic guitar, soft sustained bass, soft and comforting, peaceful and unhurried. Soft, peaceful and unhurried.
+
+3:33 [C major] Instrumental spa music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Slow clean guitar chords, slow fingerpicked nylon-string guitar, gentle Spanish classical guitar, deep gentle sub drone, soft harp notes, distant flute tones, gentle stream of water, distant ocean waves, warm and soothing, floating and weightless. Soft, peaceful and unhurried.
+
+7:07 [F major] Instrumental zen ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Soft harmonics on acoustic guitar, slide guitar played very softly, slow fingerstyle steel-string guitar, slow round bass tones, slow evolving synth pads, airy synth pads, soft rain in the distance, long hall reverb, calm and restorative, tender and intimate. Soft, peaceful and unhurried.
+
+10:40 [C major] Instrumental ambient guitar music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Clean electric guitar with soft reverb, gentle arpeggiated acoustic guitar, delay-soaked clean guitar, low cello notes, soft felt piano notes, quiet cello drone, soft tape warmth, warm room ambience, serene and still, gentle and spacious. Soft, peaceful and unhurried.
+
+14:13 [G major] Instrumental wellness music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Shimmering reverb guitar, ambient guitar swells with slow volume fades, sustained bowed electric guitar, warm upright bass notes, soft singing bowls, soft warm pads, quiet birdsong far away, slow tape delay, gentle and spacious, tender and intimate. Soft, peaceful and unhurried.
+
+17:47 [E minor] Instrumental acoustic ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Warm nylon guitar melody, ambient guitar swells with slow volume fades, slide guitar played very softly, warm upright bass notes, gentle string pads, soft glass bells, long hall reverb, slow tape delay, soft and comforting, peaceful and unhurried. Soft, peaceful and unhurried.
+
+21:20 [B minor] Instrumental calm neoclassical guitar, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Gentle arpeggiated acoustic guitar, soft twelve-string acoustic guitar, low baritone guitar notes, low cello notes, soft felt piano notes, distant flute tones, distant ocean waves, soft rain in the distance, floating and weightless, serene and still. Soft, peaceful and unhurried.
+
+24:53 [E minor] Instrumental meditative ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Slow fingerpicked nylon-string guitar, slow clean guitar chords, clean electric guitar with soft reverb, slow round bass tones, airy synth pads, gentle string pads, gentle stream of water, warm room ambience, calm and restorative, warm and soothing. Soft, peaceful and unhurried.
+
+28:27 [G major] Instrumental wellness music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Sustained bowed electric guitar, gentle Spanish classical guitar, delay-soaked clean guitar, deep gentle sub drone, slow evolving synth pads, soft warm pads, quiet birdsong far away, soft tape warmth, floating and weightless, tender and intimate. Soft, peaceful and unhurried.
+
+32:00 [E minor] Instrumental meditative ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Warm nylon guitar melody, shimmering reverb guitar, soft harmonics on acoustic guitar, soft sustained bass, soft singing bowls, soft harp notes, distant ocean waves, quiet birdsong far away, soft and comforting, peaceful and unhurried. Soft, peaceful and unhurried.
+
+35:33 [A minor] Instrumental new age guitar, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Slow fingerstyle steel-string guitar, warm hollow-body guitar notes, gentle arpeggiated acoustic guitar, soft sustained bass, quiet cello drone, soft glass bells, gentle stream of water, warm room ambience, gentle and spacious, warm and soothing. Soft, peaceful and unhurried.
+
+39:07 [E minor] Instrumental zen ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Warm hollow-body guitar notes, sustained bowed electric guitar, slow fingerstyle steel-string guitar, low cello notes, soft felt piano notes, soft harp notes, slow tape delay, soft rain in the distance, calm and restorative, serene and still. Soft, peaceful and unhurried.
+
+42:40 [G major] Instrumental spa music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Warm nylon guitar melody, shimmering reverb guitar, low baritone guitar notes, deep gentle sub drone, airy synth pads, quiet cello drone, long hall reverb, soft tape warmth, tender and intimate, floating and weightless. Soft, peaceful and unhurried.
+
+46:13 [D major] Instrumental acoustic ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Gentle Spanish classical guitar, clean electric guitar with soft reverb, delay-soaked clean guitar, slow round bass tones, soft warm pads, soft glass bells, soft rain in the distance, gentle stream of water, serene and still, calm and restorative. Soft, peaceful and unhurried.
+
+49:47 [B minor] Instrumental ambient guitar music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Ambient guitar swells with slow volume fades, soft harmonics on acoustic guitar, slow clean guitar chords, warm upright bass notes, distant flute tones, gentle string pads, long hall reverb, warm room ambience, soft and comforting, peaceful and unhurried. Soft, peaceful and unhurried.
+
+53:20 [D major] Instrumental calm neoclassical guitar, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Soft twelve-string acoustic guitar, slide guitar played very softly, slow fingerpicked nylon-string guitar, low cello notes, soft singing bowls, slow evolving synth pads, quiet birdsong far away, soft tape warmth, gentle and spacious, warm and soothing. Soft, peaceful and unhurried.
+
+56:53 [G major] Instrumental new age guitar, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Low baritone guitar notes, warm hollow-body guitar notes, soft twelve-string acoustic guitar, soft sustained bass, soft and comforting, peaceful and unhurried. Soft, peaceful and unhurried.

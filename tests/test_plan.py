@@ -1,3 +1,8 @@
+import json
+import re
+from dataclasses import replace
+from pathlib import Path
+
 import pytest
 
 from longdrive.plan import (
@@ -6,12 +11,51 @@ from longdrive.plan import (
     PHRASE_BARS,
     Plan,
     Timing,
+    journey_text,
     make_plan,
     parse_bpm,
     parse_journey,
     parse_key,
+    parse_wordlist,
     related_keys,
 )
+
+WORDLISTS = Path(__file__).resolve().parents[1] / "wordlists"
+STARTER_LISTS = ["funky", "ambient", "guitar-spa"]
+EVERY_3_5M = replace(EVOLUTIONS["gentle"], section_s=210.0)
+
+GROUPED_LIST = """
+# A comment.
+bpm: 110
+
+## genre (pick 1)
+micro-funk
+disco house
+
+## drums (pick 1)
+soft hi-hats
+rimshot
+
+## bass (pick 1)
+rubbery bass
+rolling bassline
+sub bass
+
+## instruments (pick 2)
+electric piano
+clavinet
+chord stabs
+brass stabs
+
+## texture (pick 1)
+tape hiss
+spring reverb
+
+## mood (pick 2)
+hypnotic
+warm
+clean
+"""
 
 
 def test_segments_cover_the_duration_exactly():
@@ -41,8 +85,27 @@ def test_different_seeds_give_different_music():
 
 
 def test_plan_survives_a_json_round_trip():
-    plan = make_plan("pads", 900, seed=5)
+    plan = make_plan("pads", 900, seed=5, drums_db=-60, kick_db=-9)
     assert Plan.from_json(plan.to_json()) == plan
+
+
+def test_a_plan_saved_before_drum_swaps_still_loads():
+    saved = json.loads(make_plan("pads", 900, seed=5).to_json())
+    del saved["drums_db"], saved["kick_db"]
+    assert not Plan.from_json(json.dumps(saved)).swaps_drums
+
+
+def test_a_list_can_set_its_drum_levels():
+    words = parse_wordlist("bpm: 110\ndrums: -60\nkick: -9.5\nwarm bass")
+    plan = make_plan("", 60, seed=1, words=words)
+    assert (plan.drums_db, plan.kick_db) == (-60, -9.5)
+    assert plan.swaps_drums
+
+
+def test_explicit_drum_levels_beat_the_list():
+    words = parse_wordlist("bpm: 110\ndrums: -60\nkick: -9\nwarm bass")
+    plan = make_plan("", 60, seed=1, words=words, drums_db=-12, kick_db=-20)
+    assert (plan.drums_db, plan.kick_db) == (-12, -20)
 
 
 def test_tempo_and_key_are_read_from_the_prompt():
@@ -267,3 +330,275 @@ def test_joins_land_on_phrase_boundaries(bpm, signature):
 def test_snapping_keeps_the_exact_duration():
     plan = make_plan("pads", 3600, seed=1, bpm=58)
     assert sum(s.new_s for s in plan.segments) == pytest.approx(3600)
+
+
+def section_starts(plan):
+    return [s.start_s for s in plan.segments if s.index == 0 or s.fresh]
+
+
+def section_prompts(plan):
+    return [s.prompt for s in plan.segments if s.index == 0 or s.fresh]
+
+
+def has_extras(prompt):
+    """Whether a prompt from GROUPED_LIST names anything from its instruments or texture."""
+    extras = ("electric piano", "clavinet", "chord stabs", "brass stabs", "tape hiss", "reverb")
+    return any(extra in prompt.lower() for extra in extras)
+
+
+def test_a_section_starts_on_the_nearest_window():
+    journey = parse_journey("0:00 A.\n3:30 B.\n7:00 C.\n10:29 D.")
+    plan = make_plan("", 840, seed=1, bpm=110, journey=journey)
+    assert section_starts(plan) == pytest.approx([0, 209.45, 418.91, 628.36], abs=0.01)
+
+
+def test_a_section_never_slips_on_a_rounding_error():
+    plan = make_plan("", 600, seed=1, bpm=110, journey=parse_journey("0:00 A.\n3:29 B."))
+    assert section_starts(plan)[1] == pytest.approx(209.45, abs=0.01)
+
+
+def test_a_section_too_close_to_the_last_is_dropped():
+    journey = parse_journey("0:00 A.\n3:29 B.\n4:20 C.\n7:00 D.")
+    plan = make_plan("", 840, seed=1, bpm=110, journey=journey)
+    assert section_prompts(plan) == ["A.", "B.", "D."]
+
+
+def test_a_section_in_the_closing_fade_is_dropped():
+    journey = parse_journey("0:00 A.\n29:15 B.\n59:21 C.")
+    plan = make_plan("", 3600, seed=1, bpm=110, journey=journey)
+    assert section_prompts(plan) == ["A.", "B."]
+
+
+@pytest.mark.parametrize("bpm", [90, 100, 110, 118, 124, 128, 140])
+def test_section_spacing_is_whole_windows_at_any_tempo(bpm):
+    words = replace(parse_wordlist(GROUPED_LIST), bpm=bpm)
+    plan = make_plan("", 3600, seed=1, words=words, evolution=EVERY_3_5M)
+    starts = section_starts(plan)
+    gaps = [after - before for before, after in zip(starts, starts[1:], strict=False)]
+    assert gaps == pytest.approx([gaps[0]] * len(gaps))
+    windows = gaps[0] / plan.timing.hop_s
+    assert windows == pytest.approx(round(windows))
+
+
+def test_spacing_leaves_every_section_time_to_play_alone():
+    plan = make_plan("pads", 3600, seed=1, bpm=110, evolution=replace(EVERY_3_5M, section_s=10.0))
+    starts = section_starts(plan)
+    assert min(b - a for a, b in zip(starts, starts[1:], strict=False)) > plan.timing.blend_s
+
+
+def test_an_hour_every_three_and_a_half_minutes_has_17_even_sections():
+    plan = make_plan(
+        "", 3600, seed=1, words=parse_wordlist(GROUPED_LIST), evolution=EVERY_3_5M
+    )
+    starts = section_starts(plan)
+    assert len(starts) == plan.movements == 17
+    assert starts == pytest.approx([index * 209.4545 for index in range(17)], abs=0.01)
+    assert len(plan.segments) == 69
+
+
+def test_evolve_follows_a_section_length_too():
+    plan = make_plan(LONG_PROMPT, 3600, seed=1, evolution=EVERY_3_5M)
+    assert plan.movements == 17
+
+
+def test_a_word_list_is_read_by_group():
+    words = parse_wordlist(GROUPED_LIST)
+    assert words.bpm == 110
+    assert [group.name for group in words.groups] == [
+        "genre", "drums", "bass", "instruments", "texture", "mood",
+    ]
+    assert [group.count for group in words.groups] == [1, 1, 1, 2, 1, 2]
+    assert words.groups[1].entries == ("soft hi-hats", "rimshot")
+
+
+def test_a_list_with_no_headings_is_one_group():
+    words = parse_wordlist("\n".join(f"word {index}" for index in range(50)))
+    assert len(words.groups) == 1
+    assert words.groups[0].count == 10
+    assert len(words.groups[0].entries) == 50
+
+
+def test_a_short_flat_list_draws_everything_it_has():
+    assert parse_wordlist("one\ntwo\nthree").groups[0].count == 3
+
+
+def test_a_heading_with_no_count_picks_one():
+    assert parse_wordlist("## bass\nsub bass").groups[0].count == 1
+
+
+@pytest.mark.parametrize(
+    ("text", "match"),
+    [
+        ("", "no entries"),
+        ("# just a comment", "no entries"),
+        ("## bass (pick 3)\none\ntwo", "pick 3"),
+        ("## bass (pick 0)\none", "pick 0"),
+        ("## empty (pick 1)\n## bass (pick 1)\none", "empty"),
+        ("## bass pick two\none", "line 1"),
+        ("frame: no place for the draw\none", "entries"),
+    ],
+)
+def test_a_list_that_cannot_be_used_is_an_error(text, match):
+    with pytest.raises(ValueError, match=match):
+        parse_wordlist(text)
+
+
+def test_a_word_list_needs_a_tempo():
+    words = parse_wordlist("one\ntwo")
+    with pytest.raises(ValueError, match="tempo"):
+        make_plan("", 600, seed=1, words=words)
+
+
+def test_an_explicit_tempo_beats_the_list():
+    plan = make_plan("", 600, seed=1, bpm=120, words=parse_wordlist(GROUPED_LIST))
+    assert plan.bpm == 120
+    assert "120 BPM" in plan.segments[0].prompt
+
+
+def test_every_section_shares_the_tempo():
+    plan = make_plan(
+        "", 3600, seed=1, words=parse_wordlist(GROUPED_LIST), evolution=EVERY_3_5M
+    )
+    assert {parse_bpm(prompt) for prompt in section_prompts(plan)} == {110}
+
+
+def test_the_same_seed_draws_the_same_prompts():
+    words = parse_wordlist(GROUPED_LIST)
+    one = make_plan("", 3600, seed=5, words=words, evolution=EVERY_3_5M)
+    assert one == make_plan("", 3600, seed=5, words=words, evolution=EVERY_3_5M)
+    assert one != make_plan("", 3600, seed=6, words=words, evolution=EVERY_3_5M)
+
+
+def test_every_prompt_has_the_frame_around_it():
+    plan = make_plan(
+        "", 3600, seed=1, words=parse_wordlist(GROUPED_LIST), evolution=EVERY_3_5M
+    )
+    for prompt in section_prompts(plan):
+        assert re.match(r"Instrumental (micro-funk|disco house), 110 BPM\. ", prompt)
+        assert prompt.endswith(". Smooth uninterrupted groove.")
+
+
+def test_a_list_can_set_its_own_frame():
+    words = parse_wordlist("frame: {genre} at {bpm}: {entries}\nbpm: 90\n## genre\nfunk\n## a\nb")
+    plan = make_plan("", 60, seed=1, words=words)
+    assert plan.segments[0].prompt == "funk at 90: B"
+
+
+def test_a_flat_list_needs_no_genre():
+    plan = make_plan("", 60, seed=1, bpm=110, words=parse_wordlist("warm bass"))
+    assert plan.segments[0].prompt.startswith("Instrumental music, 110 BPM.")
+
+
+def test_every_entry_is_used_before_any_repeats():
+    entries = [f"word {index}" for index in range(50)]
+    plan = make_plan(
+        "", 3600, seed=2, bpm=110, words=parse_wordlist("\n".join(entries)), evolution=EVERY_3_5M
+    )
+    # The closing section repeats the opening, so it says nothing about the shuffle.
+    drawn = [
+        word
+        for prompt in section_prompts(plan)[:-1]
+        for word in re.findall(r"word \d+", prompt.lower())
+    ]
+    assert len(set(drawn[:50])) == 50
+    assert len(set(drawn[50:100])) == 50
+
+
+def test_no_entry_is_drawn_twice_for_one_prompt():
+    words = parse_wordlist("## mood (pick 3)\nwarm\nclean\nhazy\ndark")
+    plan = make_plan("", 3600, seed=3, bpm=110, words=words, evolution=EVERY_3_5M)
+    for prompt in section_prompts(plan):
+        found = re.findall(r"warm|clean|hazy|dark", prompt.lower())
+        assert len(found) == len(set(found)) == 3
+
+
+def test_a_piece_starts_and_ends_stripped_back_on_the_same_draw():
+    plan = make_plan(
+        "", 3600, seed=1, words=parse_wordlist(GROUPED_LIST), evolution=EVERY_3_5M
+    )
+    prompts = section_prompts(plan)
+    assert prompts[0] == prompts[-1]
+    assert plan.segments[0].key == plan.segments[-1].key
+    assert not has_extras(prompts[0])
+    assert all(has_extras(prompt) for prompt in prompts[1:-1])
+    assert len(set(prompts[:-1])) == 16
+
+
+def test_a_short_piece_is_not_stripped_back():
+    words = parse_wordlist(GROUPED_LIST)
+    plan = make_plan("", 420, seed=1, words=words, evolution=EVERY_3_5M)
+    assert plan.movements == 2
+    prompts = section_prompts(plan)
+    assert len(set(prompts)) == 2
+    assert has_extras(prompts[0])
+
+
+def test_evolve_off_draws_one_full_prompt():
+    plan = make_plan("", 3600, seed=1, words=parse_wordlist(GROUPED_LIST))
+    assert plan.movements == 1
+    assert {s.prompt for s in plan.segments} == {plan.prompt}
+
+
+def test_a_flat_list_can_still_be_bookended():
+    words = parse_wordlist("\n".join(f"word {index}" for index in range(50)))
+    plan = make_plan("", 3600, seed=1, bpm=110, words=words, evolution=EVERY_3_5M)
+    prompts = section_prompts(plan)
+    assert prompts[0] == prompts[-1]
+    assert len(re.findall(r"word \d+", prompts[0].lower())) == 10
+
+
+def test_keys_move_and_come_home():
+    plan = make_plan(
+        "", 3600, seed=1, key="A minor", words=parse_wordlist(GROUPED_LIST), evolution=EVERY_3_5M
+    )
+    assert len({s.key for s in plan.segments}) >= 3
+    assert plan.segments[-1].key == "A minor"
+
+
+def test_a_saved_timeline_gives_back_the_same_sections():
+    plan = make_plan(
+        "", 3600, seed=4, key="A minor", words=parse_wordlist(GROUPED_LIST), evolution=EVERY_3_5M
+    )
+    journey = parse_journey(journey_text(plan))
+    assert len(journey) == 17
+    again = make_plan("", 3600, seed=4, journey=journey)
+    assert section_prompts(again) == section_prompts(plan)
+    assert section_starts(again) == pytest.approx(section_starts(plan))
+    assert [s.key for s in again.segments] == [s.key for s in plan.segments]
+    assert again.bpm == plan.bpm
+
+
+@pytest.mark.parametrize("name", STARTER_LISTS)
+def test_starter_lists_hold_about_fifty_entries_and_draw_ten(name):
+    words = parse_wordlist((WORDLISTS / f"{name}.txt").read_text(encoding="utf-8"))
+    assert words.bpm
+    assert 45 <= sum(len(group.entries) for group in words.groups) <= 60
+    assert sum(group.count for group in words.groups if group.name != "genre") == 10
+    names = [group.name for group in words.groups]
+    assert {"genre", "bass", "instruments", "texture", "mood"} <= set(names)
+
+
+@pytest.mark.parametrize("name", STARTER_LISTS)
+def test_starter_lists_swap_the_drums(name):
+    words = parse_wordlist((WORDLISTS / f"{name}.txt").read_text(encoding="utf-8"))
+    assert words.drums_db is not None
+    assert words.kick_db is not None
+
+
+@pytest.mark.parametrize("name", STARTER_LISTS)
+def test_starter_lists_keep_to_a_steady_simple_groove(name):
+    words = parse_wordlist((WORDLISTS / f"{name}.txt").read_text(encoding="utf-8"))
+    entries = " ".join(entry for group in words.groups for entry in group.entries).lower()
+    structure = r"\b(breakdown|drop|intro|outro|solo|vocals?|verse|chorus)\b"
+    busy_drums = r"\b(intricate|fills?|rolls?|shuffl\w+|shakers?|breakbeat|tribal|congas?)\b"
+    assert not re.findall(structure, entries)
+    assert not re.findall(busy_drums, entries)
+
+
+@pytest.mark.parametrize("name", STARTER_LISTS)
+def test_an_hour_from_a_starter_list_fits_the_prompt_limit(name):
+    words = parse_wordlist((WORDLISTS / f"{name}.txt").read_text(encoding="utf-8"))
+    for seed in range(20):
+        plan = make_plan("", 3600, seed=seed, words=words, evolution=EVERY_3_5M)
+        assert plan.movements == 17
+        assert max(len(prompt) for prompt in section_prompts(plan)) < MAX_PROMPT_CHARS / 2

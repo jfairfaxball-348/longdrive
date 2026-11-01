@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterable, Iterator
+from collections.abc import Callable, Iterable, Iterator
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -170,13 +170,21 @@ def render_master(
     out_stem: Path,
     settings: MasterSettings | None = None,
     formats: tuple[str, ...] = ("wav",),
+    change: Callable[[Iterable[np.ndarray]], Iterator[np.ndarray]] | None = None,
 ) -> list[Path]:
-    """Two streaming passes: measure the level curve, then write gained, limited audio."""
+    """Two streaming passes: measure the level curve, then write gained, limited audio.
+
+    ``change`` is any processing the joined piece needs before that.
+    """
     settings = settings or MasterSettings()
     rate = sf.info(segment_paths[0]).samplerate
 
+    def piece() -> Iterable[np.ndarray]:
+        blocks = iter_piece(plan, segment_paths)
+        return change(blocks) if change else blocks
+
     levels, peaks, total = [], [], 0
-    for block in rechunk(iter_piece(plan, segment_paths), rate):
+    for block in rechunk(piece(), rate):
         levels.append(audio.rms(block))
         peaks.append(float(np.abs(block).max()))
         total += block.shape[0]
@@ -191,7 +199,7 @@ def render_master(
     outputs, paths = _open_outputs(out_stem, rate, total, formats)
     try:
         written = 0
-        for block in rechunk(iter_piece(plan, segment_paths), rate):
+        for block in rechunk(piece(), rate):
             frames = block.shape[0]
             position = written + np.arange(frames)
             gain = 10 ** (np.interp(position, block_centres, gain_db) / 20)

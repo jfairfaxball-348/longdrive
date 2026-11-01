@@ -97,6 +97,12 @@ def kicks(rate, seconds, offset_s=0.0, bpm=120):
 
 
 @pytest.mark.parametrize("offset_s", [0.0, 0.11, 0.25, 0.37])
+def test_the_beat_is_found_to_within_a_few_milliseconds(rate, offset_s):
+    found = audio.beat_phase(kicks(rate, 20, offset_s=offset_s), rate, 0.5)
+    assert (found - offset_s + 0.25) % 0.5 - 0.25 == pytest.approx(0.0, abs=0.015)
+
+
+@pytest.mark.parametrize("offset_s", [0.0, 0.11, 0.25, 0.37])
 def test_beats_are_lined_up_to_within_a_few_milliseconds(rate, offset_s):
     bar_s = 2.0
     outgoing = kicks(rate, 16)

@@ -1,0 +1,72 @@
+# Ambient: an atmospheric groove, still 110 BPM with a kick and bass, not drumless ambient.
+#
+# Each section draws the number shown from each group, and every prompt gets the frame
+# around it. There is no drums group, because the model's drums are taken out afterwards and
+# a plain kick goes in, and naming drums turns them up against the music.
+#
+# The first and last sections skip instruments and texture, so a piece starts and ends
+# stripped back. Leave out words the model reads as song structure, such as breakdown, drop,
+# intro, outro, solo and vocals.
+
+bpm: 110
+drums: -60
+kick: -9
+
+## genre (pick 1)
+atmospheric deep house
+ambient house
+dub house
+dub techno
+deep minimal house
+balearic house
+melodic minimal house
+lo-fi deep house
+
+## bass (pick 1)
+warm sustained sub bass
+deep round sub bass
+warm rolling bassline
+soft dubby bassline
+submerged pulsing bass
+gentle analog synth bass
+warm bass taking the lead
+soft upright bass
+
+## instruments (pick 4)
+warm sustained pads
+deep echoing chords
+slow evolving synth pads
+soft felt piano chords
+soft electric piano
+airy string pads
+low analog drone
+soft harp notes
+soft glass bells
+distant muted trumpet
+soft vibraphone notes
+distant flute tones
+clean guitar harmonics with long delay
+melodic synthesizer fragments
+soft cello lines
+hazy tape-warped piano
+distant bell tones
+
+## texture (pick 2)
+tape delay
+soft tape hiss
+long hall reverb
+spacious atmospheric backgrounds
+gentle rain in the distance
+slowly opening filter
+warm analog textures
+night-time city ambience
+
+## mood (pick 3)
+spacious and weightless
+hazy and hypnotic
+calm and cinematic
+warm and enveloping
+dark and submerged
+soft and unhurried
+airy and open
+lots of space

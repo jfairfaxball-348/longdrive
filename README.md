@@ -57,7 +57,8 @@ uv run longdrive setup
 ```
 
 `setup` clones ACE-Step at a pinned commit into `engines/ace-step`, creates its separate Python
-environment, and downloads the weights at pinned revisions. Plan for about 18 GB of disk.
+environment, and downloads the weights at pinned revisions. It also adds Demucs to that environment.
+Plan for about 18 GB of disk.
 
 ## Usage
 
@@ -73,6 +74,10 @@ uv run longdrive master runs/<name>
 | `-d, --duration` | Length, such as `45m`, `1h30m` or `3600`. Default `1h`. |
 | `-e, --evolve` | `off`, `gentle` or `strong`. See below. |
 | `--journey` | A timeline of prompts, for full control. See below. |
+| `--words` | Draw every section's prompt from a keyword list. See below. |
+| `--section-every` | Time between new sections, such as `3.5m`. Works with `--words` and `--evolve`. |
+| `--save-journey` | Write the sections to a timeline to read or edit, and stop. |
+| `--drums`, `--kick` | Turn the model's drums down, and add a plain kick. See below. |
 | `-q, --quality` | `draft`, `standard` or `best`. See below. |
 | `-m, --model` | `turbo` for anything with a groove, `sft` for sparse music without drums. |
 | `--bpm`, `--key` | Tempo and key. Also read from the prompt; otherwise chosen slow. |
@@ -82,9 +87,81 @@ uv run longdrive master runs/<name>
 `master` works on a run in progress, so you can listen to what exists so far. It also writes other
 formats: `longdrive master runs/<name> --format wav mp3`.
 
+## Taming the drums
+
+The model's drums tend to be busy and to fill the mix, and nothing in a prompt changes that much. So
+a finished piece can have them swapped out. `--drums` sets the level of the model's drums in dB, and
+`--kick` adds a plain kick on every beat, in dB against the music:
+
+```bash
+uv run longdrive generate --words funky --drums -60 --kick -9
+uv run longdrive master runs/<name> --drums -18 --kick -12
+```
+
+`-60` takes the drums out altogether. Leave both out to keep the drums as rendered.
+
+The drums are split out with [Demucs](https://github.com/adefossez/demucs) after rendering, and only
+that stem is subtracted, so everything else stays as it was rendered. That takes about 8 minutes an
+hour. The stem stays in the run, so a new `master` can try other levels straight away.
+
 ## Making it evolve
 
-What changes a piece is the prompt each movement starts from, so there are three ways to set them.
+What changes a piece is the prompt each movement starts from, so there are four ways to set them.
+
+**Draw from a keyword list.** Give it a list, and every section gets a new prompt drawn from it, so
+an hour needs no prompts written by hand:
+
+```bash
+uv run longdrive generate --words funky --section-every 3.5m --duration 1h
+```
+
+At 110 BPM that starts a new section every 96 bars (3:29), which is 17 sections an hour. A quarter
+of the piece is then blending, and each section plays alone for about 2:37. Spacing is always a
+whole number of windows, and word lists use 3.5 minutes unless you say otherwise.
+
+To read the prompts before a long render, or change any you don't like, save the draw as a timeline.
+Render it with `--journey`, like one you wrote yourself:
+
+```bash
+uv run longdrive generate --words funky --seed 7 --save-journey funky-7.txt
+uv run longdrive generate --journey funky-7.txt --duration 3600 --drums -60 --kick -9
+```
+
+The saved file starts with the exact command to render it.
+
+The lists are in [wordlists/](wordlists/): `funky`, `ambient` and `guitar-spa`, about 50 entries
+each. To make your own, add a text file there with one entry per line, grouped by the part each one
+plays:
+
+```text
+bpm: 110
+drums: -60
+kick: -9
+
+## genre (pick 1)
+micro-funk
+disco house
+
+## bass (pick 1)
+rubbery syncopated bass
+warm rolling bassline
+```
+
+- Each section draws the number shown from each group, and every entry is used before any repeats.
+  The same `--seed` gives the same prompts. A list with no headings is one pool of ten at a time.
+- Each prompt reads `Instrumental {genre}, {bpm} BPM. {entries}. Smooth uninterrupted groove.` A
+  `frame:` line in a list replaces this. It has to contain `{entries}`.
+- The first and last sections leave out `instruments` and `texture` and use the same draw, so a piece
+  starts and ends stripped back, in its home key.
+- A list needs a tempo, from a `bpm:` line or `--bpm`, because every section has to match to blend.
+- `drums:` and `kick:` lines set the levels described under [Taming the drums](#taming-the-drums).
+- Write entries as short phrases, such as "warm syncopated synth bass". Ten of them come to about
+  the length of the prompts that made [mix 001](mixes/001-deep-house-journey/notes.md).
+- Leave out words the model reads as song structure, such as breakdown, drop, intro, outro, solo and
+  vocals. Leave out drums too: naming them barely changes the pattern and turns them up against the
+  music.
+
+Choosing `--evolve` with a list only changes how often the key moves.
 
 **Write a journey.** This gives you the most control, and is the way to get the most change. Each
 line of a text file is a start time, an optional key, and a complete prompt for that movement:
@@ -105,13 +182,15 @@ uv run longdrive generate --journey examples/deep-house-journey.txt --duration 1
   changes almost nothing, while rewriting it changes the whole arrangement.
 - **Keep the tempo the same on every line**, so that movements can be beat-matched.
 - Keep keys related. The relative major or minor, or a fifth away, blends cleanly.
+- **Leave room for the blends.** Each section starts on its nearest window, and one too short to
+  play outside its blend is dropped, with a note saying so.
 
 **Use `--evolve`.** This is a mild alternative for when you only have one prompt. Each new movement
 keeps your opening sentence and uses a different selection of your other phrases, or adds a direction
 if the prompt is short. `gentle`, the default, starts a new movement every 10 minutes and moves key
-every second one, and `strong` does both every 6 minutes. Expect new patterns and a shift of key,
-but much the same sound: the words that set the character of the music don't change, so a journey
-is the way to get real change.
+every second one, and `strong` does both every 6 minutes. `--section-every` sets your own spacing.
+Expect new patterns and a shift of key, but much the same sound: the words that set the character of
+the music don't change, so a keyword list or a journey is the way to get real change.
 
 **Use `--evolve off`** for one steady movement from start to finish.
 
@@ -167,6 +246,8 @@ order, along with the recipe that made it.
 | `evolution.py` | Tone, harmony, key and busyness, minute by minute |
 | `pattern.py` | How alike passages are, note by note |
 | `blend_check.py` | Whether the kicks line up through each blend |
+| `drums.py` | How plain the drums are, with a picture of the average bar |
+| `try_prompts.py` | Renders a set of prompts once each and compares them |
 | `spectrogram.py` | The whole piece on one page, run with the engine's Python |
 | `phone_mp3.py` | 128 kbps MP3 parts that are small enough to send to a phone |
 
@@ -183,4 +264,5 @@ the real model.
 ## Licences
 
 longdrive drives ACE-Step 1.5, whose code and weights are MIT-licensed and whose
-[model card](https://huggingface.co/ACE-Step/Ace-Step1.5) allows commercial use of output.
+[model card](https://huggingface.co/ACE-Step/Ace-Step1.5) allows commercial use of output. Demucs is
+MIT-licensed too.

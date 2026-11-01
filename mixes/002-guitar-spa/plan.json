@@ -1,0 +1,699 @@
+{
+  "prompt": "Instrumental new age guitar, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Low baritone guitar notes, warm hollow-body guitar notes, soft twelve-string acoustic guitar, soft sustained bass, soft and comforting, peaceful and unhurried. Soft, peaceful and unhurried.",
+  "duration_s": 3600.0,
+  "bpm": 72,
+  "key": "G major",
+  "time_signature": "4",
+  "seed": 26,
+  "timing": {
+    "hop_s": 53.333333333333336,
+    "context_s": 26.666666666666668,
+    "tail_s": 80.0,
+    "crossfade_s": 3.3333333333333335,
+    "blend_s": 53.333333333333336
+  },
+  "segments": [
+    {
+      "index": 0,
+      "start_s": 0.0,
+      "new_s": 53.333333333333336,
+      "seed": 576908817,
+      "key": "G major",
+      "prompt": "Instrumental new age guitar, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Low baritone guitar notes, warm hollow-body guitar notes, soft twelve-string acoustic guitar, soft sustained bass, soft and comforting, peaceful and unhurried. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 1,
+      "start_s": 53.333333333333336,
+      "new_s": 53.333333333333336,
+      "seed": 162374117,
+      "key": "G major",
+      "prompt": "Instrumental new age guitar, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Low baritone guitar notes, warm hollow-body guitar notes, soft twelve-string acoustic guitar, soft sustained bass, soft and comforting, peaceful and unhurried. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 2,
+      "start_s": 106.66666666666667,
+      "new_s": 53.333333333333336,
+      "seed": 709614219,
+      "key": "G major",
+      "prompt": "Instrumental new age guitar, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Low baritone guitar notes, warm hollow-body guitar notes, soft twelve-string acoustic guitar, soft sustained bass, soft and comforting, peaceful and unhurried. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 3,
+      "start_s": 160.0,
+      "new_s": 53.333333333333336,
+      "seed": 704707589,
+      "key": "G major",
+      "prompt": "Instrumental new age guitar, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Low baritone guitar notes, warm hollow-body guitar notes, soft twelve-string acoustic guitar, soft sustained bass, soft and comforting, peaceful and unhurried. Soft, peaceful and unhurried.",
+      "overlap_s": 53.333333333333336,
+      "fresh": false
+    },
+    {
+      "index": 4,
+      "start_s": 213.33333333333334,
+      "new_s": 53.333333333333336,
+      "seed": 237605277,
+      "key": "C major",
+      "prompt": "Instrumental spa music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Slow clean guitar chords, slow fingerpicked nylon-string guitar, gentle Spanish classical guitar, deep gentle sub drone, soft harp notes, distant flute tones, gentle stream of water, distant ocean waves, warm and soothing, floating and weightless. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": true
+    },
+    {
+      "index": 5,
+      "start_s": 266.6666666666667,
+      "new_s": 53.333333333333336,
+      "seed": 228275337,
+      "key": "C major",
+      "prompt": "Instrumental spa music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Slow clean guitar chords, slow fingerpicked nylon-string guitar, gentle Spanish classical guitar, deep gentle sub drone, soft harp notes, distant flute tones, gentle stream of water, distant ocean waves, warm and soothing, floating and weightless. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 6,
+      "start_s": 320.0,
+      "new_s": 53.333333333333336,
+      "seed": 1667074383,
+      "key": "C major",
+      "prompt": "Instrumental spa music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Slow clean guitar chords, slow fingerpicked nylon-string guitar, gentle Spanish classical guitar, deep gentle sub drone, soft harp notes, distant flute tones, gentle stream of water, distant ocean waves, warm and soothing, floating and weightless. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 7,
+      "start_s": 373.33333333333337,
+      "new_s": 53.333333333333336,
+      "seed": 2081207345,
+      "key": "C major",
+      "prompt": "Instrumental spa music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Slow clean guitar chords, slow fingerpicked nylon-string guitar, gentle Spanish classical guitar, deep gentle sub drone, soft harp notes, distant flute tones, gentle stream of water, distant ocean waves, warm and soothing, floating and weightless. Soft, peaceful and unhurried.",
+      "overlap_s": 53.333333333333336,
+      "fresh": false
+    },
+    {
+      "index": 8,
+      "start_s": 426.6666666666667,
+      "new_s": 53.333333333333336,
+      "seed": 498414256,
+      "key": "F major",
+      "prompt": "Instrumental zen ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Soft harmonics on acoustic guitar, slide guitar played very softly, slow fingerstyle steel-string guitar, slow round bass tones, slow evolving synth pads, airy synth pads, soft rain in the distance, long hall reverb, calm and restorative, tender and intimate. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": true
+    },
+    {
+      "index": 9,
+      "start_s": 480.0,
+      "new_s": 53.333333333333336,
+      "seed": 1791250447,
+      "key": "F major",
+      "prompt": "Instrumental zen ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Soft harmonics on acoustic guitar, slide guitar played very softly, slow fingerstyle steel-string guitar, slow round bass tones, slow evolving synth pads, airy synth pads, soft rain in the distance, long hall reverb, calm and restorative, tender and intimate. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 10,
+      "start_s": 533.3333333333334,
+      "new_s": 53.333333333333336,
+      "seed": 884274845,
+      "key": "F major",
+      "prompt": "Instrumental zen ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Soft harmonics on acoustic guitar, slide guitar played very softly, slow fingerstyle steel-string guitar, slow round bass tones, slow evolving synth pads, airy synth pads, soft rain in the distance, long hall reverb, calm and restorative, tender and intimate. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 11,
+      "start_s": 586.6666666666667,
+      "new_s": 53.333333333333336,
+      "seed": 1470134377,
+      "key": "F major",
+      "prompt": "Instrumental zen ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Soft harmonics on acoustic guitar, slide guitar played very softly, slow fingerstyle steel-string guitar, slow round bass tones, slow evolving synth pads, airy synth pads, soft rain in the distance, long hall reverb, calm and restorative, tender and intimate. Soft, peaceful and unhurried.",
+      "overlap_s": 53.333333333333336,
+      "fresh": false
+    },
+    {
+      "index": 12,
+      "start_s": 640.0,
+      "new_s": 53.333333333333336,
+      "seed": 720557206,
+      "key": "C major",
+      "prompt": "Instrumental ambient guitar music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Clean electric guitar with soft reverb, gentle arpeggiated acoustic guitar, delay-soaked clean guitar, low cello notes, soft felt piano notes, quiet cello drone, soft tape warmth, warm room ambience, serene and still, gentle and spacious. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": true
+    },
+    {
+      "index": 13,
+      "start_s": 693.3333333333334,
+      "new_s": 53.333333333333336,
+      "seed": 990647994,
+      "key": "C major",
+      "prompt": "Instrumental ambient guitar music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Clean electric guitar with soft reverb, gentle arpeggiated acoustic guitar, delay-soaked clean guitar, low cello notes, soft felt piano notes, quiet cello drone, soft tape warmth, warm room ambience, serene and still, gentle and spacious. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 14,
+      "start_s": 746.6666666666667,
+      "new_s": 53.333333333333336,
+      "seed": 254672654,
+      "key": "C major",
+      "prompt": "Instrumental ambient guitar music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Clean electric guitar with soft reverb, gentle arpeggiated acoustic guitar, delay-soaked clean guitar, low cello notes, soft felt piano notes, quiet cello drone, soft tape warmth, warm room ambience, serene and still, gentle and spacious. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 15,
+      "start_s": 800.0,
+      "new_s": 53.333333333333336,
+      "seed": 66975455,
+      "key": "C major",
+      "prompt": "Instrumental ambient guitar music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Clean electric guitar with soft reverb, gentle arpeggiated acoustic guitar, delay-soaked clean guitar, low cello notes, soft felt piano notes, quiet cello drone, soft tape warmth, warm room ambience, serene and still, gentle and spacious. Soft, peaceful and unhurried.",
+      "overlap_s": 53.333333333333336,
+      "fresh": false
+    },
+    {
+      "index": 16,
+      "start_s": 853.3333333333334,
+      "new_s": 53.333333333333336,
+      "seed": 1306092601,
+      "key": "G major",
+      "prompt": "Instrumental wellness music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Shimmering reverb guitar, ambient guitar swells with slow volume fades, sustained bowed electric guitar, warm upright bass notes, soft singing bowls, soft warm pads, quiet birdsong far away, slow tape delay, gentle and spacious, tender and intimate. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": true
+    },
+    {
+      "index": 17,
+      "start_s": 906.6666666666667,
+      "new_s": 53.333333333333336,
+      "seed": 1122839092,
+      "key": "G major",
+      "prompt": "Instrumental wellness music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Shimmering reverb guitar, ambient guitar swells with slow volume fades, sustained bowed electric guitar, warm upright bass notes, soft singing bowls, soft warm pads, quiet birdsong far away, slow tape delay, gentle and spacious, tender and intimate. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 18,
+      "start_s": 960.0,
+      "new_s": 53.333333333333336,
+      "seed": 1791618945,
+      "key": "G major",
+      "prompt": "Instrumental wellness music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Shimmering reverb guitar, ambient guitar swells with slow volume fades, sustained bowed electric guitar, warm upright bass notes, soft singing bowls, soft warm pads, quiet birdsong far away, slow tape delay, gentle and spacious, tender and intimate. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 19,
+      "start_s": 1013.3333333333334,
+      "new_s": 53.333333333333336,
+      "seed": 838600361,
+      "key": "G major",
+      "prompt": "Instrumental wellness music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Shimmering reverb guitar, ambient guitar swells with slow volume fades, sustained bowed electric guitar, warm upright bass notes, soft singing bowls, soft warm pads, quiet birdsong far away, slow tape delay, gentle and spacious, tender and intimate. Soft, peaceful and unhurried.",
+      "overlap_s": 53.333333333333336,
+      "fresh": false
+    },
+    {
+      "index": 20,
+      "start_s": 1066.6666666666667,
+      "new_s": 53.333333333333336,
+      "seed": 1879636108,
+      "key": "E minor",
+      "prompt": "Instrumental acoustic ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Warm nylon guitar melody, ambient guitar swells with slow volume fades, slide guitar played very softly, warm upright bass notes, gentle string pads, soft glass bells, long hall reverb, slow tape delay, soft and comforting, peaceful and unhurried. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": true
+    },
+    {
+      "index": 21,
+      "start_s": 1120.0,
+      "new_s": 53.333333333333336,
+      "seed": 2115760667,
+      "key": "E minor",
+      "prompt": "Instrumental acoustic ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Warm nylon guitar melody, ambient guitar swells with slow volume fades, slide guitar played very softly, warm upright bass notes, gentle string pads, soft glass bells, long hall reverb, slow tape delay, soft and comforting, peaceful and unhurried. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 22,
+      "start_s": 1173.3333333333335,
+      "new_s": 53.333333333333336,
+      "seed": 1392719680,
+      "key": "E minor",
+      "prompt": "Instrumental acoustic ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Warm nylon guitar melody, ambient guitar swells with slow volume fades, slide guitar played very softly, warm upright bass notes, gentle string pads, soft glass bells, long hall reverb, slow tape delay, soft and comforting, peaceful and unhurried. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 23,
+      "start_s": 1226.6666666666667,
+      "new_s": 53.333333333333336,
+      "seed": 1099577987,
+      "key": "E minor",
+      "prompt": "Instrumental acoustic ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Warm nylon guitar melody, ambient guitar swells with slow volume fades, slide guitar played very softly, warm upright bass notes, gentle string pads, soft glass bells, long hall reverb, slow tape delay, soft and comforting, peaceful and unhurried. Soft, peaceful and unhurried.",
+      "overlap_s": 53.333333333333336,
+      "fresh": false
+    },
+    {
+      "index": 24,
+      "start_s": 1280.0,
+      "new_s": 53.333333333333336,
+      "seed": 1182327583,
+      "key": "B minor",
+      "prompt": "Instrumental calm neoclassical guitar, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Gentle arpeggiated acoustic guitar, soft twelve-string acoustic guitar, low baritone guitar notes, low cello notes, soft felt piano notes, distant flute tones, distant ocean waves, soft rain in the distance, floating and weightless, serene and still. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": true
+    },
+    {
+      "index": 25,
+      "start_s": 1333.3333333333335,
+      "new_s": 53.333333333333336,
+      "seed": 1254214522,
+      "key": "B minor",
+      "prompt": "Instrumental calm neoclassical guitar, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Gentle arpeggiated acoustic guitar, soft twelve-string acoustic guitar, low baritone guitar notes, low cello notes, soft felt piano notes, distant flute tones, distant ocean waves, soft rain in the distance, floating and weightless, serene and still. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 26,
+      "start_s": 1386.6666666666667,
+      "new_s": 53.333333333333336,
+      "seed": 2030879370,
+      "key": "B minor",
+      "prompt": "Instrumental calm neoclassical guitar, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Gentle arpeggiated acoustic guitar, soft twelve-string acoustic guitar, low baritone guitar notes, low cello notes, soft felt piano notes, distant flute tones, distant ocean waves, soft rain in the distance, floating and weightless, serene and still. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 27,
+      "start_s": 1440.0,
+      "new_s": 53.333333333333336,
+      "seed": 211012411,
+      "key": "B minor",
+      "prompt": "Instrumental calm neoclassical guitar, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Gentle arpeggiated acoustic guitar, soft twelve-string acoustic guitar, low baritone guitar notes, low cello notes, soft felt piano notes, distant flute tones, distant ocean waves, soft rain in the distance, floating and weightless, serene and still. Soft, peaceful and unhurried.",
+      "overlap_s": 53.333333333333336,
+      "fresh": false
+    },
+    {
+      "index": 28,
+      "start_s": 1493.3333333333335,
+      "new_s": 53.333333333333336,
+      "seed": 1124279120,
+      "key": "E minor",
+      "prompt": "Instrumental meditative ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Slow fingerpicked nylon-string guitar, slow clean guitar chords, clean electric guitar with soft reverb, slow round bass tones, airy synth pads, gentle string pads, gentle stream of water, warm room ambience, calm and restorative, warm and soothing. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": true
+    },
+    {
+      "index": 29,
+      "start_s": 1546.6666666666667,
+      "new_s": 53.333333333333336,
+      "seed": 1737380111,
+      "key": "E minor",
+      "prompt": "Instrumental meditative ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Slow fingerpicked nylon-string guitar, slow clean guitar chords, clean electric guitar with soft reverb, slow round bass tones, airy synth pads, gentle string pads, gentle stream of water, warm room ambience, calm and restorative, warm and soothing. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 30,
+      "start_s": 1600.0,
+      "new_s": 53.333333333333336,
+      "seed": 244263224,
+      "key": "E minor",
+      "prompt": "Instrumental meditative ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Slow fingerpicked nylon-string guitar, slow clean guitar chords, clean electric guitar with soft reverb, slow round bass tones, airy synth pads, gentle string pads, gentle stream of water, warm room ambience, calm and restorative, warm and soothing. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 31,
+      "start_s": 1653.3333333333335,
+      "new_s": 53.333333333333336,
+      "seed": 232261517,
+      "key": "E minor",
+      "prompt": "Instrumental meditative ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Slow fingerpicked nylon-string guitar, slow clean guitar chords, clean electric guitar with soft reverb, slow round bass tones, airy synth pads, gentle string pads, gentle stream of water, warm room ambience, calm and restorative, warm and soothing. Soft, peaceful and unhurried.",
+      "overlap_s": 53.333333333333336,
+      "fresh": false
+    },
+    {
+      "index": 32,
+      "start_s": 1706.6666666666667,
+      "new_s": 53.333333333333336,
+      "seed": 1321318022,
+      "key": "G major",
+      "prompt": "Instrumental wellness music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Sustained bowed electric guitar, gentle Spanish classical guitar, delay-soaked clean guitar, deep gentle sub drone, slow evolving synth pads, soft warm pads, quiet birdsong far away, soft tape warmth, floating and weightless, tender and intimate. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": true
+    },
+    {
+      "index": 33,
+      "start_s": 1760.0,
+      "new_s": 53.333333333333336,
+      "seed": 799029491,
+      "key": "G major",
+      "prompt": "Instrumental wellness music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Sustained bowed electric guitar, gentle Spanish classical guitar, delay-soaked clean guitar, deep gentle sub drone, slow evolving synth pads, soft warm pads, quiet birdsong far away, soft tape warmth, floating and weightless, tender and intimate. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 34,
+      "start_s": 1813.3333333333335,
+      "new_s": 53.333333333333336,
+      "seed": 1273876263,
+      "key": "G major",
+      "prompt": "Instrumental wellness music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Sustained bowed electric guitar, gentle Spanish classical guitar, delay-soaked clean guitar, deep gentle sub drone, slow evolving synth pads, soft warm pads, quiet birdsong far away, soft tape warmth, floating and weightless, tender and intimate. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 35,
+      "start_s": 1866.6666666666667,
+      "new_s": 53.333333333333336,
+      "seed": 998074413,
+      "key": "G major",
+      "prompt": "Instrumental wellness music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Sustained bowed electric guitar, gentle Spanish classical guitar, delay-soaked clean guitar, deep gentle sub drone, slow evolving synth pads, soft warm pads, quiet birdsong far away, soft tape warmth, floating and weightless, tender and intimate. Soft, peaceful and unhurried.",
+      "overlap_s": 53.333333333333336,
+      "fresh": false
+    },
+    {
+      "index": 36,
+      "start_s": 1920.0,
+      "new_s": 53.333333333333336,
+      "seed": 944087143,
+      "key": "E minor",
+      "prompt": "Instrumental meditative ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Warm nylon guitar melody, shimmering reverb guitar, soft harmonics on acoustic guitar, soft sustained bass, soft singing bowls, soft harp notes, distant ocean waves, quiet birdsong far away, soft and comforting, peaceful and unhurried. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": true
+    },
+    {
+      "index": 37,
+      "start_s": 1973.3333333333335,
+      "new_s": 53.333333333333336,
+      "seed": 1081985316,
+      "key": "E minor",
+      "prompt": "Instrumental meditative ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Warm nylon guitar melody, shimmering reverb guitar, soft harmonics on acoustic guitar, soft sustained bass, soft singing bowls, soft harp notes, distant ocean waves, quiet birdsong far away, soft and comforting, peaceful and unhurried. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 38,
+      "start_s": 2026.6666666666667,
+      "new_s": 53.333333333333336,
+      "seed": 1800090264,
+      "key": "E minor",
+      "prompt": "Instrumental meditative ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Warm nylon guitar melody, shimmering reverb guitar, soft harmonics on acoustic guitar, soft sustained bass, soft singing bowls, soft harp notes, distant ocean waves, quiet birdsong far away, soft and comforting, peaceful and unhurried. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 39,
+      "start_s": 2080.0,
+      "new_s": 53.333333333333336,
+      "seed": 120831961,
+      "key": "E minor",
+      "prompt": "Instrumental meditative ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Warm nylon guitar melody, shimmering reverb guitar, soft harmonics on acoustic guitar, soft sustained bass, soft singing bowls, soft harp notes, distant ocean waves, quiet birdsong far away, soft and comforting, peaceful and unhurried. Soft, peaceful and unhurried.",
+      "overlap_s": 53.333333333333336,
+      "fresh": false
+    },
+    {
+      "index": 40,
+      "start_s": 2133.3333333333335,
+      "new_s": 53.333333333333336,
+      "seed": 1375202103,
+      "key": "A minor",
+      "prompt": "Instrumental new age guitar, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Slow fingerstyle steel-string guitar, warm hollow-body guitar notes, gentle arpeggiated acoustic guitar, soft sustained bass, quiet cello drone, soft glass bells, gentle stream of water, warm room ambience, gentle and spacious, warm and soothing. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": true
+    },
+    {
+      "index": 41,
+      "start_s": 2186.666666666667,
+      "new_s": 53.333333333333336,
+      "seed": 900645391,
+      "key": "A minor",
+      "prompt": "Instrumental new age guitar, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Slow fingerstyle steel-string guitar, warm hollow-body guitar notes, gentle arpeggiated acoustic guitar, soft sustained bass, quiet cello drone, soft glass bells, gentle stream of water, warm room ambience, gentle and spacious, warm and soothing. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 42,
+      "start_s": 2240.0,
+      "new_s": 53.333333333333336,
+      "seed": 2009924040,
+      "key": "A minor",
+      "prompt": "Instrumental new age guitar, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Slow fingerstyle steel-string guitar, warm hollow-body guitar notes, gentle arpeggiated acoustic guitar, soft sustained bass, quiet cello drone, soft glass bells, gentle stream of water, warm room ambience, gentle and spacious, warm and soothing. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 43,
+      "start_s": 2293.3333333333335,
+      "new_s": 53.333333333333336,
+      "seed": 1274036826,
+      "key": "A minor",
+      "prompt": "Instrumental new age guitar, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Slow fingerstyle steel-string guitar, warm hollow-body guitar notes, gentle arpeggiated acoustic guitar, soft sustained bass, quiet cello drone, soft glass bells, gentle stream of water, warm room ambience, gentle and spacious, warm and soothing. Soft, peaceful and unhurried.",
+      "overlap_s": 53.333333333333336,
+      "fresh": false
+    },
+    {
+      "index": 44,
+      "start_s": 2346.666666666667,
+      "new_s": 53.333333333333336,
+      "seed": 406598942,
+      "key": "E minor",
+      "prompt": "Instrumental zen ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Warm hollow-body guitar notes, sustained bowed electric guitar, slow fingerstyle steel-string guitar, low cello notes, soft felt piano notes, soft harp notes, slow tape delay, soft rain in the distance, calm and restorative, serene and still. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": true
+    },
+    {
+      "index": 45,
+      "start_s": 2400.0,
+      "new_s": 53.333333333333336,
+      "seed": 57218991,
+      "key": "E minor",
+      "prompt": "Instrumental zen ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Warm hollow-body guitar notes, sustained bowed electric guitar, slow fingerstyle steel-string guitar, low cello notes, soft felt piano notes, soft harp notes, slow tape delay, soft rain in the distance, calm and restorative, serene and still. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 46,
+      "start_s": 2453.3333333333335,
+      "new_s": 53.333333333333336,
+      "seed": 427496491,
+      "key": "E minor",
+      "prompt": "Instrumental zen ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Warm hollow-body guitar notes, sustained bowed electric guitar, slow fingerstyle steel-string guitar, low cello notes, soft felt piano notes, soft harp notes, slow tape delay, soft rain in the distance, calm and restorative, serene and still. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 47,
+      "start_s": 2506.666666666667,
+      "new_s": 53.333333333333336,
+      "seed": 4681018,
+      "key": "E minor",
+      "prompt": "Instrumental zen ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Warm hollow-body guitar notes, sustained bowed electric guitar, slow fingerstyle steel-string guitar, low cello notes, soft felt piano notes, soft harp notes, slow tape delay, soft rain in the distance, calm and restorative, serene and still. Soft, peaceful and unhurried.",
+      "overlap_s": 53.333333333333336,
+      "fresh": false
+    },
+    {
+      "index": 48,
+      "start_s": 2560.0,
+      "new_s": 53.333333333333336,
+      "seed": 259138064,
+      "key": "G major",
+      "prompt": "Instrumental spa music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Warm nylon guitar melody, shimmering reverb guitar, low baritone guitar notes, deep gentle sub drone, airy synth pads, quiet cello drone, long hall reverb, soft tape warmth, tender and intimate, floating and weightless. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": true
+    },
+    {
+      "index": 49,
+      "start_s": 2613.3333333333335,
+      "new_s": 53.333333333333336,
+      "seed": 310026897,
+      "key": "G major",
+      "prompt": "Instrumental spa music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Warm nylon guitar melody, shimmering reverb guitar, low baritone guitar notes, deep gentle sub drone, airy synth pads, quiet cello drone, long hall reverb, soft tape warmth, tender and intimate, floating and weightless. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 50,
+      "start_s": 2666.666666666667,
+      "new_s": 53.333333333333336,
+      "seed": 578411863,
+      "key": "G major",
+      "prompt": "Instrumental spa music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Warm nylon guitar melody, shimmering reverb guitar, low baritone guitar notes, deep gentle sub drone, airy synth pads, quiet cello drone, long hall reverb, soft tape warmth, tender and intimate, floating and weightless. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 51,
+      "start_s": 2720.0,
+      "new_s": 53.333333333333336,
+      "seed": 1627417910,
+      "key": "G major",
+      "prompt": "Instrumental spa music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Warm nylon guitar melody, shimmering reverb guitar, low baritone guitar notes, deep gentle sub drone, airy synth pads, quiet cello drone, long hall reverb, soft tape warmth, tender and intimate, floating and weightless. Soft, peaceful and unhurried.",
+      "overlap_s": 53.333333333333336,
+      "fresh": false
+    },
+    {
+      "index": 52,
+      "start_s": 2773.3333333333335,
+      "new_s": 53.333333333333336,
+      "seed": 359692663,
+      "key": "D major",
+      "prompt": "Instrumental acoustic ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Gentle Spanish classical guitar, clean electric guitar with soft reverb, delay-soaked clean guitar, slow round bass tones, soft warm pads, soft glass bells, soft rain in the distance, gentle stream of water, serene and still, calm and restorative. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": true
+    },
+    {
+      "index": 53,
+      "start_s": 2826.666666666667,
+      "new_s": 53.333333333333336,
+      "seed": 1519905004,
+      "key": "D major",
+      "prompt": "Instrumental acoustic ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Gentle Spanish classical guitar, clean electric guitar with soft reverb, delay-soaked clean guitar, slow round bass tones, soft warm pads, soft glass bells, soft rain in the distance, gentle stream of water, serene and still, calm and restorative. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 54,
+      "start_s": 2880.0,
+      "new_s": 53.333333333333336,
+      "seed": 508129411,
+      "key": "D major",
+      "prompt": "Instrumental acoustic ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Gentle Spanish classical guitar, clean electric guitar with soft reverb, delay-soaked clean guitar, slow round bass tones, soft warm pads, soft glass bells, soft rain in the distance, gentle stream of water, serene and still, calm and restorative. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 55,
+      "start_s": 2933.3333333333335,
+      "new_s": 53.333333333333336,
+      "seed": 2077694398,
+      "key": "D major",
+      "prompt": "Instrumental acoustic ambient, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Gentle Spanish classical guitar, clean electric guitar with soft reverb, delay-soaked clean guitar, slow round bass tones, soft warm pads, soft glass bells, soft rain in the distance, gentle stream of water, serene and still, calm and restorative. Soft, peaceful and unhurried.",
+      "overlap_s": 53.333333333333336,
+      "fresh": false
+    },
+    {
+      "index": 56,
+      "start_s": 2986.666666666667,
+      "new_s": 53.333333333333336,
+      "seed": 1699989380,
+      "key": "B minor",
+      "prompt": "Instrumental ambient guitar music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Ambient guitar swells with slow volume fades, soft harmonics on acoustic guitar, slow clean guitar chords, warm upright bass notes, distant flute tones, gentle string pads, long hall reverb, warm room ambience, soft and comforting, peaceful and unhurried. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": true
+    },
+    {
+      "index": 57,
+      "start_s": 3040.0,
+      "new_s": 53.333333333333336,
+      "seed": 2126977134,
+      "key": "B minor",
+      "prompt": "Instrumental ambient guitar music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Ambient guitar swells with slow volume fades, soft harmonics on acoustic guitar, slow clean guitar chords, warm upright bass notes, distant flute tones, gentle string pads, long hall reverb, warm room ambience, soft and comforting, peaceful and unhurried. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 58,
+      "start_s": 3093.3333333333335,
+      "new_s": 53.333333333333336,
+      "seed": 816403927,
+      "key": "B minor",
+      "prompt": "Instrumental ambient guitar music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Ambient guitar swells with slow volume fades, soft harmonics on acoustic guitar, slow clean guitar chords, warm upright bass notes, distant flute tones, gentle string pads, long hall reverb, warm room ambience, soft and comforting, peaceful and unhurried. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 59,
+      "start_s": 3146.666666666667,
+      "new_s": 53.333333333333336,
+      "seed": 1793255302,
+      "key": "B minor",
+      "prompt": "Instrumental ambient guitar music, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Ambient guitar swells with slow volume fades, soft harmonics on acoustic guitar, slow clean guitar chords, warm upright bass notes, distant flute tones, gentle string pads, long hall reverb, warm room ambience, soft and comforting, peaceful and unhurried. Soft, peaceful and unhurried.",
+      "overlap_s": 53.333333333333336,
+      "fresh": false
+    },
+    {
+      "index": 60,
+      "start_s": 3200.0,
+      "new_s": 53.333333333333336,
+      "seed": 1081681541,
+      "key": "D major",
+      "prompt": "Instrumental calm neoclassical guitar, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Soft twelve-string acoustic guitar, slide guitar played very softly, slow fingerpicked nylon-string guitar, low cello notes, soft singing bowls, slow evolving synth pads, quiet birdsong far away, soft tape warmth, gentle and spacious, warm and soothing. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": true
+    },
+    {
+      "index": 61,
+      "start_s": 3253.3333333333335,
+      "new_s": 53.333333333333336,
+      "seed": 1121994105,
+      "key": "D major",
+      "prompt": "Instrumental calm neoclassical guitar, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Soft twelve-string acoustic guitar, slide guitar played very softly, slow fingerpicked nylon-string guitar, low cello notes, soft singing bowls, slow evolving synth pads, quiet birdsong far away, soft tape warmth, gentle and spacious, warm and soothing. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 62,
+      "start_s": 3306.666666666667,
+      "new_s": 53.333333333333336,
+      "seed": 432055620,
+      "key": "D major",
+      "prompt": "Instrumental calm neoclassical guitar, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Soft twelve-string acoustic guitar, slide guitar played very softly, slow fingerpicked nylon-string guitar, low cello notes, soft singing bowls, slow evolving synth pads, quiet birdsong far away, soft tape warmth, gentle and spacious, warm and soothing. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 63,
+      "start_s": 3360.0,
+      "new_s": 53.333333333333336,
+      "seed": 2113326186,
+      "key": "D major",
+      "prompt": "Instrumental calm neoclassical guitar, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Soft twelve-string acoustic guitar, slide guitar played very softly, slow fingerpicked nylon-string guitar, low cello notes, soft singing bowls, slow evolving synth pads, quiet birdsong far away, soft tape warmth, gentle and spacious, warm and soothing. Soft, peaceful and unhurried.",
+      "overlap_s": 53.333333333333336,
+      "fresh": false
+    },
+    {
+      "index": 64,
+      "start_s": 3413.3333333333335,
+      "new_s": 53.333333333333336,
+      "seed": 295344009,
+      "key": "G major",
+      "prompt": "Instrumental new age guitar, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Low baritone guitar notes, warm hollow-body guitar notes, soft twelve-string acoustic guitar, soft sustained bass, soft and comforting, peaceful and unhurried. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": true
+    },
+    {
+      "index": 65,
+      "start_s": 3466.666666666667,
+      "new_s": 53.333333333333336,
+      "seed": 1584922319,
+      "key": "G major",
+      "prompt": "Instrumental new age guitar, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Low baritone guitar notes, warm hollow-body guitar notes, soft twelve-string acoustic guitar, soft sustained bass, soft and comforting, peaceful and unhurried. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 66,
+      "start_s": 3520.0,
+      "new_s": 53.333333333333336,
+      "seed": 2005852580,
+      "key": "G major",
+      "prompt": "Instrumental new age guitar, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Low baritone guitar notes, warm hollow-body guitar notes, soft twelve-string acoustic guitar, soft sustained bass, soft and comforting, peaceful and unhurried. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    },
+    {
+      "index": 67,
+      "start_s": 3573.3333333333335,
+      "new_s": 26.666666666666515,
+      "seed": 952238441,
+      "key": "G major",
+      "prompt": "Instrumental new age guitar, 72 BPM, slow and calm. No drums, no percussion. Guitar-led. Low baritone guitar notes, warm hollow-body guitar notes, soft twelve-string acoustic guitar, soft sustained bass, soft and comforting, peaceful and unhurried. Soft, peaceful and unhurried.",
+      "overlap_s": 3.3333333333333335,
+      "fresh": false
+    }
+  ],
+  "drums_db": -60.0,
+  "kick_db": -13.0
+}

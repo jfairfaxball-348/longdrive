@@ -12,7 +12,7 @@ from pathlib import Path
 
 import numpy as np
 
-from longdrive import audio
+from longdrive import audio, stems
 from longdrive.engines import (
     Engine,
     EngineError,
@@ -151,7 +151,7 @@ def conduct(run: Run, engine: Engine | None = None, master: bool = True) -> list
             engine.stop()
             if master:
                 log.info("Mastering")
-                outputs = render_master(run.plan, run.committed_paths(), run.stem, MasterSettings())
+                outputs = finish(run)
                 for path in outputs:
                     log.info("Wrote %s", path)
     except BaseException as error:
@@ -165,6 +165,13 @@ def conduct(run: Run, engine: Engine | None = None, master: bool = True) -> list
     run.state["status"] = "complete"
     run.save()
     return outputs
+
+
+def finish(run: Run, formats: tuple[str, ...] = ("wav",)) -> list[Path]:
+    """Master what has been rendered, with the drums swapped if the plan asks for it."""
+    paths = run.committed_paths()
+    change = stems.prepare(run.plan, paths, run.work_dir).apply if run.plan.swaps_drums else None
+    return render_master(run.plan, paths, run.stem, MasterSettings(), formats, change)
 
 
 def _render_segment(run: Run, engine: Engine, segment: Segment) -> None:

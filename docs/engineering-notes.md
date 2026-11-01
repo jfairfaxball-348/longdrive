@@ -101,7 +101,8 @@ added sentence. Comparing single renders of the 139-token prompt shows why:
 | Rewritten: dub techno | 2.54 |
 
 Rewriting the prompt is the lever. Spectrograms of those renders look like different records, at the
-same tempo and on the same grid. So every journey line is a whole prompt.
+same tempo and on the same grid. So every journey line is a whole prompt, and a keyword list draws a
+whole new one for each section.
 
 A chain through four rewritten prompts confirmed it: busyness moved from 6.9 down to between 2.9 and
 4.5, harmonic similarity to the opening fell to 0.91, and tone stepped by 3 dB at a blend.
@@ -151,6 +152,149 @@ Above 1 kHz, the visible change is the highs dropping out for 10 to 20 seconds a
 at 47:42 and 48:05. The roughest join is at 36:39, the largest tone jump of the hour at 6.1 dB, where
 the highs come back after about a second with almost nothing above 100 Hz. It falls on a phrase
 boundary and may read as a deliberate drop. None of this has been judged by ear.
+
+## Keyword lists
+
+A list of about 50 phrases, grouped by role and drawn fresh for each section, was meant to do what
+rewriting prompts by hand did. It does. Six draws from `funky` and `ambient`, rendered once each for
+140 s, compared with the sections of the first hour:
+
+| Measure | Mix 001's sections | Six draws |
+| --- | --- | --- |
+| Busyness | 3.3 to 5.8 | 2.8 to 5.0 |
+| Tone between any two | 0.9 to 2.0 dB | 1.0 to 4.3 dB |
+
+These are single renders, not a finished hour. Tone moved with the draw, not with small changes to
+a prompt: the same draw and seed, with and without a drum sentence, stayed within 0.5 to 1.2 dB.
+
+Spacing needed one fix. A section used to start at the first window at or after its time, so `3:30`
+missed a boundary by half a second and slipped to 4:22. It now starts on the nearest window, and one
+too short to play for a phrase outside the blend into it is dropped.
+
+## Busy drums
+
+Mix 001's drums are busy, and take up a lot of the mix. `scripts/drums.py` folds a passage's onsets
+into one bar and measures it. Beat share is how much of the low end falls on the four beats: 0.88
+for a synthetic four-on-the-floor and 0.39 for a broken kick. Mix 001 averages 0.40, and the only
+section that looks like a plain four-on-the-floor is the atmospheric one at 42:46. The top end is hit
+on nearly every 16th.
+
+The model could not be talked out of this. Each row is the same prompts and seeds, on `turbo`:
+
+| Attempt | Beat share | Mids against the rest |
+| --- | --- | --- |
+| No drum sentence | 0.46 | -11.5 dB |
+| "Simple four-on-the-floor kick drum." in the frame | 0.51 | -12.4 dB |
+| A similar sentence at the very start of the prompt | 0.49 | -13.7 dB |
+| A plain kick loop as context, thrown away afterwards | 0.41 | -14.7 dB |
+| The same loop with hats | 0.47 | -14.9 dB |
+| Cover mode from kick and hats, strength 0.8 | 0.76 | -21.6 dB |
+| Cover mode from a kick alone, strength 0.65 | 0.82 | -20.8 dB |
+| Cover mode from a kick alone, strength 0.8 | 0.87 | -20.7 dB |
+| Cover mode from a soft kick under a chord bed, strength 0.65 | 0.58 | -16.4 dB |
+
+Mids are everything from 150 Hz to 4 kHz, where the chords and keys are. The first five rows are six
+prompts, the cover rows four, and the last row two.
+
+Words do little, as with any sentence inside a long prompt. On one seed the pattern barely changes
+between wordings, and different seeds only reached about 0.5, so rendering more candidates would not
+fix it either. Naming the drums even costs room, with the mids falling further the more prominently
+a sentence asks for them. So the default frame doesn't mention drums, and `funky` and `ambient` have
+no drums group.
+
+Cover mode (`task_type="cover"` with a source audio file, available on `turbo`) is the only thing
+that really changed the pattern, and at 0.8 a kick-only source gave a textbook `@   @   @   @   `. But
+the source's balance comes straight through. Hats in the source made the top end denser and pulled
+renders together, to within 1.5 dB of each other. A kick alone left the mids 6 to 11 dB lower, and
+that was the user's complaint: plainer, but taking up even more room. A chord bed under the kick
+calmed the top end, with 6 to 8 hits a bar instead of 10 to 15, but the kick stopped being plain.
+
+Cover mode also only reaches one window. Chaining on from it with `repaint` gave a beat share of
+0.78, 0.55, 0.63, 0.44, and the next section did the same: 0.77, 0.40, 0.44. Mids did recover, from
+-21 to about -14 dB, so later windows are ordinary renders again.
+
+A whole section can be a single render, which would avoid that: a 300 s window fitted in 4 GB and
+took 101 s. The kick still wandered in that one test, and a long render has no selection or context,
+so this has not been taken further.
+
+What works is to leave the render alone and fix the mix. Demucs (`htdemucs`) splits out the drums,
+which takes 20 s for 140 s of audio on this GPU, in 4 GB. Subtracting that stem from the original
+leaves everything else exactly as rendered, where rebuilding from stems would not:
+
+| Passage | Mids | Busyness |
+| --- | --- | --- |
+| Micro-funk, as rendered | -11.7 dB | 4.14 |
+| The same, drums out, soft kick at -9 dB | -8.3 dB | 2.75 |
+| Lo-fi deep house, as rendered | -13.8 dB | 4.26 |
+| The same, drums out, soft kick at -9 dB | -8.8 dB | 2.32 |
+
+That busyness is close to the 2.54 of the dub techno rewrite, the calmest in these notes. Beat share
+hardly moves, at 0.37 to 0.45, because the model's bassline shares that band and is much louder than
+a soft kick. The low end of the groove is still the bassline's, so a very plain pulse needs plainer
+bass entries in the list as well.
+
+Before settling on Demucs, median-filter separation of sustained and sharp sounds was tried, since it
+needs no new dependency. It lowered busyness from 4.7 to 3.2 but made the mids worse, from -18 to
+-20 dB. A kick's weight is low and reads as sustained, so it stayed, and sharp parts of the music
+went instead.
+
+The added kick needs a grid. Each section's comes from its own drum stem, measured past the blend.
+Sections can disagree, and jumping between grids made gaps of 0.85 and 1.5 beats in a test piece,
+which would be a stumble in the pulse. So the kick eases across each blend, where even half a beat
+is a tempo change of about 0.5%. A section with no drums to measure carries the last grid on.
+
+## Slow music with no drums
+
+The `guitar-spa` list asks for no drums at 72 BPM, on `turbo`. A 14-minute draft in four sections
+took 17 minutes, with nothing flagged:
+
+| Measure | The first hour | Guitar spa, in one key |
+| --- | --- | --- |
+| Busyness, by section | 3.3 to 5.8 | 1.5 to 1.9 |
+| Tone between sections | 0.9 to 2.0 dB | 2.0 to 2.3 dB |
+| Harmonic similarity | 0.91 to 1.00 | 0.84 to 1.00 |
+
+Tone and harmony moved further than in the first hour, even with the key asked for staying the same.
+The model did as it was told for seven minutes, with a drum stem at -54 and -46 dB, then added drums
+anyway, at -22 and -24 dB. This is the old finding that calm music gains drums, and taking the drum
+stem out after rendering deals with it, so `sft` wasn't needed here.
+
+There are no kicks for a new section to line up with, so sections aren't beat-matched to each other,
+and tempo reads are less reliable. One 0.6 s dip to -51 dB at 9:15 hasn't been judged by ear.
+
+## The spa hour
+
+`guitar-spa` rendered for a full hour on `turbo` at standard quality in 3 hours 44 minutes: 68 windows
+in 17 sections and 206 renders, with 2 breakdowns rejected and replaced, none flagged, 3.46 GB peak
+VRAM and 11.5 GB of worker RAM. Taking the drums out and mastering took 4 minutes more. It uses seed
+26 with `--evolve strong`, picked from a scan of seeds for a key path that stays within two steps of
+G major and closes gently, which gave 7 keys.
+
+| Measure | The first hour | The spa hour |
+| --- | --- | --- |
+| Busyness, by section | 3.3 to 5.8 | 1.5 to 2.0 |
+| Tone between sections | 0.9 to 2.0 dB | 1.2 to 4.6 dB |
+| Tone against the start, by the minute | Up to 3.1 dB | Up to 6.2 dB |
+| Harmonic similarity | 0.91 to 1.00 | 0.68 to 0.99 |
+
+The words did what they were there for. Keys carried change as well this time: the key asked for was
+one of the top two estimates in 14 of 17 sections, and the three misses were minor keys read as a
+close neighbour. These estimates are rough, as before.
+
+Twice as many sections did not thin the music out. First windows averaged a busyness of 1.49 against
+1.70 for the rest, about the same gap as mix 001, and the two halves of the hour match at 1.64 and
+1.65. Over the whole hour, mids sit at -4.5 dB against the rest, with a beat share of 0.43.
+
+"No drums, no percussion" only went so far. The drum stem stayed under -40 dB in 7 of the 17 sections,
+and reached -21.5 dB at 14:13 and -24.6 dB at 56:53, all of it swapped out. Those 7 sections have no
+beat of their own to measure, so the kick carries its grid through them. It held across 4,321 hits:
+the only gaps more than 5 ms off the beat are 64 that fall 6 ms short, all in the one blend at 28:27.
+
+The tempo read 72 in 12 sections, 71 in one and about 70 in the other four, but this is a low-end
+read of slow music, so it may mean little. Two things stand out, and the user asked not to chase them
+before hearing the piece: a 0.5 s gap down to -48.8 dB at 56:30, and a tone jump of 11.3 dB at 40:00,
+nearly twice mix 001's largest. The user then approved the hour as mix 002, without asking for either
+to be changed.
 
 ## Continuation really does continue
 

@@ -9,7 +9,7 @@ build/
 *.egg-info/
 
 # The model engine lives in its own pinned checkout and environment.
-engines/
+/engines/
 
 # Generated music and working files.
 runs/

@@ -1,0 +1,72 @@
+# Funky: tight and restrained, from micro-funk out to disco house.
+#
+# Each section draws the number shown from each group, and every prompt gets the frame
+# around it. There is no drums group, because the model's drums are taken out afterwards and
+# a plain kick goes in, and naming drums turns them up against the music.
+#
+# The first and last sections skip instruments and texture, so a piece starts and ends
+# stripped back. Leave out words the model reads as song structure, such as breakdown, drop,
+# intro, outro, solo and vocals.
+
+bpm: 110
+drums: -60
+kick: -9
+
+## genre (pick 1)
+micro-funk
+minimal deep house
+funky deep house
+disco house
+nu-disco
+electro-funk
+boogie house
+jazzy deep house
+
+## bass (pick 1)
+warm syncopated synth bass
+rubbery syncopated bass
+warm rolling bassline
+deep round sub bass
+plucky slap bass
+short muted funk bass
+fat analog synth bass
+walking electric bass
+
+## instruments (pick 4)
+delicate chord stabs
+lush warm chord stabs
+soft electric piano
+funky clavinet stabs
+muted wah guitar chops
+clean funk guitar licks
+soft vibraphone notes
+short brass stabs
+warm organ chords
+soft marimba notes
+gliding analog synth line
+filtered disco strings
+melodic synthesizer fragments
+soft plucked synth arpeggio
+mellow jazz guitar chords
+muted trumpet phrases
+warm tape-echo chord stabs
+soft flute riff
+
+## texture (pick 2)
+warm analog textures
+gentle filter modulation
+tape saturation
+short spring reverb
+dusty vinyl warmth
+subtle sidechain pumping
+wide stereo delay
+
+## mood (pick 3)
+restrained and hypnotic
+clean and understated
+warm and soulful
+playful and elastic
+cool and sophisticated
+gently uplifting
+lots of space
+elegant rhythmic repetition

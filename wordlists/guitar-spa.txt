@@ -1,0 +1,81 @@
+# Guitar spa: guitar-driven ambient spa music, slow and calm, with a very soft pulse.
+#
+# Each section draws the number shown from each group, and every prompt gets the frame
+# around it. The frame asks for no drums, because the pulse is added afterwards, far quieter
+# than the model would play it. So there is no drums group here, and nothing percussive.
+#
+# The first and last sections skip instruments and texture, so a piece starts and ends on
+# little more than guitar. Leave out words the model reads as song structure, such as
+# breakdown, drop, intro, outro, solo and vocals.
+
+bpm: 72
+drums: -60
+kick: -13
+frame: Instrumental {genre}, {bpm} BPM, slow and calm. No drums, no percussion. Guitar-led. {entries}. Soft, peaceful and unhurried.
+
+## genre (pick 1)
+ambient guitar music
+spa music
+new age guitar
+meditative ambient
+acoustic ambient
+wellness music
+zen ambient
+calm neoclassical guitar
+
+## guitar (pick 3)
+slow fingerpicked nylon-string guitar
+warm nylon guitar melody
+gentle arpeggiated acoustic guitar
+slow fingerstyle steel-string guitar
+soft twelve-string acoustic guitar
+soft harmonics on acoustic guitar
+clean electric guitar with soft reverb
+slow clean guitar chords
+delay-soaked clean guitar
+shimmering reverb guitar
+ambient guitar swells with slow volume fades
+sustained bowed electric guitar
+slide guitar played very softly
+warm hollow-body guitar notes
+low baritone guitar notes
+gentle Spanish classical guitar
+
+## bass (pick 1)
+soft sustained bass
+warm upright bass notes
+deep gentle sub drone
+low cello notes
+slow round bass tones
+
+## instruments (pick 2)
+soft warm pads
+gentle string pads
+airy synth pads
+soft felt piano notes
+distant flute tones
+soft singing bowls
+soft harp notes
+quiet cello drone
+soft glass bells
+slow evolving synth pads
+
+## texture (pick 2)
+long hall reverb
+soft tape warmth
+gentle stream of water
+distant ocean waves
+soft rain in the distance
+warm room ambience
+slow tape delay
+quiet birdsong far away
+
+## mood (pick 2)
+calm and restorative
+peaceful and unhurried
+warm and soothing
+gentle and spacious
+tender and intimate
+floating and weightless
+serene and still
+soft and comforting

@@ -6,6 +6,7 @@ can be cleared, but a mix here is final.
 | No. | Title | Finished | Length | Sections |
 | --- | --- | --- | --- | --- |
 | [001](001-deep-house-journey/notes.md) | Deep House Journey | 2026-11-01 | 1:00:00 | 9 |
+| [002](002-guitar-spa/notes.md) | Guitar Spa | 2026-11-01 | 1:00:00 | 17 |
 
 Each mix has its own folder, named `NNN-title`, and its files start `longdrive-NNN-title`. Audio
 stays out of git, since a WAV comes to about 1 GB an hour. Everything needed to explain a mix goes

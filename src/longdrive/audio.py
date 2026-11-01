@@ -32,6 +32,7 @@ _JOIN_WEIGHT = 1.0
 _DIP_BLOCK_S = 8.0
 
 _BEAT_HOP = 240  # 5 ms at 48 kHz
+_ONSET_FFT = 2048
 _KICK_BAND_HZ = (30.0, 150.0)
 
 _BAND_COUNT = 24
@@ -116,7 +117,7 @@ def _kick_onsets(audio: np.ndarray, rate: int) -> np.ndarray:
     """Rises in low-end energy, at 5 ms resolution: a trace of where the kicks fall."""
     mono = audio.mean(axis=1)
     freqs, _, spectrum = stft(
-        mono, rate, nperseg=2048, noverlap=2048 - _BEAT_HOP, boundary=None, padded=False
+        mono, rate, nperseg=_ONSET_FFT, noverlap=_ONSET_FFT - _BEAT_HOP, boundary=None, padded=False
     )
     band = (freqs >= _KICK_BAND_HZ[0]) & (freqs <= _KICK_BAND_HZ[1])
     energy = np.log10(np.square(np.abs(spectrum[band])).sum(axis=0) + 1e-9)
@@ -138,6 +139,18 @@ def beat_offset(outgoing: np.ndarray, incoming: np.ndarray, rate: int, bar_s: fl
         return 0
     scores = [float(reference[:span] @ candidate[lag : lag + span]) for lag in range(steps)]
     return int(np.argmax(scores)) * _BEAT_HOP
+
+
+def beat_phase(audio: np.ndarray, rate: int, beat_s: float) -> float:
+    """Where the beats fall in a passage, in seconds from its start, from its low-end onsets."""
+    onsets = np.maximum(0.0, _kick_onsets(audio, rate))
+    frames_per_beat = beat_s * rate / _BEAT_HOP
+    positions = np.floor(np.arange(onsets.size) % frames_per_beat).astype(int)
+    folded = np.bincount(positions, onsets, minlength=int(frames_per_beat) + 1)
+    # A beat is several frames wide, so judge each position with its neighbours.
+    wrapped = np.concatenate([folded[-2:], folded, folded[:2]])
+    peak = int(np.argmax(np.convolve(wrapped, np.ones(5), "valid")))
+    return (peak * _BEAT_HOP + _ONSET_FFT // 2) / rate % beat_s
 
 
 def spectral_shape(audio: np.ndarray, rate: int) -> np.ndarray:
